@@ -1,0 +1,90 @@
+.footer {
+    background-color: #ffffff;
+    padding: 40px 60px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    border-top: 1px solid #ccc;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .footer-left {
+    max-width: 300px;
+  }
+  
+  .logo {
+    font-family: 'Georgia', serif;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .address-title,
+  .contact-title {
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  
+  .footer-left a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .footer-left a:hover {
+    text-decoration: underline;
+  }
+  
+  .social-icons {
+    margin-top: 15px;
+    display: flex;
+    gap: 12px;
+    font-size: 16px;
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: 80px;
+  }
+  
+  .footer-links div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .footer-links a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .footer-links a:hover {
+    color: #0073e6;
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid #ccc;
+    margin-top: 30px;
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .legal-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .legal-links a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .legal-links a:hover {
+    text-decoration: underline;
+  }
