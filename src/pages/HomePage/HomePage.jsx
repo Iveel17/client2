@@ -1,11 +1,13 @@
 import React from 'react';
 import './HomePage.css';
-import { MapPin, Phone, Mail, Clock, Users, Monitor, ChevronRight, Linkedin, Twitter, Instagram, Youtube } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Users, Monitor, Linkedin, Twitter, Instagram, Youtube } from 'lucide-react';
 import YoungBoyStudyingPic from '@/assets/images/YoungBoyStudying.jpg'
 
 import Header from '../../components/layout/Header/Header.jsx';
+import Footer from '../../components/layout/Footer/Footer.jsx';
 import ButtonA from '@/components/common/buttons/ButtonA.jsx';
 import ButtonB from '@/components/common/buttons/ButtonB.jsx';
+import LinkA from '@/components/common/buttons/LinkA.jsx';
 
 const HomePage = () => {
   const teamMembers = [
@@ -61,7 +63,7 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50" >
       <Header />
 
       {/* Hero Section */}
@@ -101,14 +103,7 @@ const HomePage = () => {
           <div className="text-center border border-gray-200 rounded-lg p-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">We're hiring!</h2>
             <p className="text-gray-600 mb-6">Discover your potential with us today.</p>
-            <button className="border border-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-50">
-              Open positions
-            </button>
-          </div>
-          <div className="text-center mt-8">
-            <button className="bg-purple-600 text-white px-6 py-3 rounded-lg flex items-center mx-auto hover:bg-purple-700 transition duration-300">
-              <span className="mr-2">+</span> Section
-            </button>
+            <ButtonA text='Open Positions' className="border border-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-50"/>
           </div>
         </div>
       </section>
@@ -133,9 +128,7 @@ const HomePage = () => {
               <p className="text-gray-600 mb-6">
                 Our platform offers engaging video courses designed to elevate your learning experience.
               </p>
-              <button className="text-blue-600 hover:text-blue-700 flex items-center mx-auto">
-                Explore <ChevronRight className="ml-1 h-4 w-4" />
-              </button>
+              <LinkA text="Explore" to="/courses" />
             </div>
 
             <div className="text-center p-6">
@@ -148,9 +141,7 @@ const HomePage = () => {
               <p className="text-gray-600 mb-6">
                 Customize your learning journey with schedules that fit your lifestyle.
               </p>
-              <button className="text-blue-600 hover:text-blue-700 flex items-center mx-auto">
-                Join <ChevronRight className="ml-1 h-4 w-4" />
-              </button>
+              <LinkA text="Join" to="/signup" />
             </div>
 
             <div className="text-center p-6">
@@ -163,9 +154,7 @@ const HomePage = () => {
               <p className="text-gray-600 mb-6">
                 Access a wealth of resources that enhance your understanding and retention.
               </p>
-              <button className="text-blue-600 hover:text-blue-700 flex items-center mx-auto">
-                Start <ChevronRight className="ml-1 h-4 w-4" />
-              </button>
+              <LinkA text="Learn More" to="/about" />
             </div>
           </div>
         </div>
@@ -253,9 +242,7 @@ const HomePage = () => {
                   <div>
                     <h3 className="text-lg font-bold text-gray-800 mb-2">Office</h3>
                     <p className="text-gray-600 mb-1">455 Learning Ave, Sydney NSW 2000 AU</p>
-                    <button className="text-blue-600 hover:text-blue-700 flex items-center">
-                      Get Directions <ChevronRight className="ml-1 h-4 w-4" />
-                    </button>
+                    <LinkA text="Get Directions" to="/about" />
                   </div>
                 </div>
               </div>
@@ -272,75 +259,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-50 border-t">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="text-2xl font-bold italic text-gray-800 mb-4">Logo</div>
-              <div className="mb-4">
-                <p className="text-sm font-semibold text-gray-800 mb-2">Address:</p>
-                <p className="text-sm text-gray-600">Level 1, 12 Sample St, Sydney NSW 2000</p>
-              </div>
-              <div className="mb-6">
-                <p className="text-sm font-semibold text-gray-800 mb-2">Contact:</p>
-                <a href="tel:1800123456" className="text-sm text-blue-600 hover:text-blue-700">
-                  1800 123 456
-                </a>
-                <br />
-                <a href="mailto:ITsupport@example.com" className="text-sm text-blue-600 hover:text-blue-700">
-                  ITsupport@example.com
-                </a>
-              </div>
-              <div className="flex space-x-3">
-                <button className="p-2 bg-gray-200 rounded hover:bg-gray-300">
-                  <Instagram className="h-4 w-4 text-gray-600" />
-                </button>
-                <button className="p-2 bg-gray-200 rounded hover:bg-gray-300">
-                  <Twitter className="h-4 w-4 text-gray-600" />
-                </button>
-                <button className="p-2 bg-gray-200 rounded hover:bg-gray-300">
-                  <Linkedin className="h-4 w-4 text-gray-600" />
-                </button>
-                <button className="p-2 bg-gray-200 rounded hover:bg-gray-300">
-                  <Youtube className="h-4 w-4 text-gray-600" />
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <div className="space-y-3">
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">About Us</a>
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">Our Courses</a>
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">Tutoring Services</a>
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">Contact Us</a>
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">FAQ Section</a>
-              </div>
-            </div>
-
-            <div>
-              <div className="space-y-3">
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">Blog Posts</a>
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">Help Center</a>
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">Careers Page</a>
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">Community Forum</a>
-                <a href="#" className="block text-sm text-gray-600 hover:text-gray-800">Feedback Form</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-200 mt-8 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-sm text-gray-600">© 2025 Polume. All rights reserved.</p>
-              <div className="flex space-x-6 mt-4 md:mt-0">
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-700">Privacy Policy</a>
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-700">Terms of Service</a>
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-700">Cookies Settings</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
