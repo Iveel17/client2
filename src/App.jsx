@@ -4,6 +4,7 @@ import CoursesPage from './pages/CoursesPage/CoursesPage'
 import ProductsPage from './pages/ProductsPage/ProductsPage'
 import LiveLessonsPage from './pages/LiveLessonsPage/LiveLessonsPage'
 
+import AboutPage from './pages/AboutPage'
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
@@ -20,6 +21,8 @@ function App() {
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/live-lessons" element={<LiveLessonsPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            {/* Add more routes as needed */}
           </Routes>
         </Router>
   )
