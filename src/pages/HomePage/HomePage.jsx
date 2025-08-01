@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Clock, Users, Monitor, Linkedin, Twitter, Instagra
 import YoungBoyStudyingPic from '@/assets/images/YoungBoyStudying.jpg'
 
 import Header from '../../components/layout/Header/Header.jsx';
-import Footer from '../../components/layout/Footer/Footer.jsx';
+import Footer from '../../components/layout/Footer.jsx';
 import ButtonA from '@/components/common/buttons/ButtonA.jsx';
 import ButtonB from '@/components/common/buttons/ButtonB.jsx';
 import LinkA from '@/components/common/buttons/LinkA.jsx';
