@@ -3,9 +3,7 @@ import Card from '@/components/common/Card';
 import Header from '@/components/layout/Header/Header';
 import ModalA from '@/components/common/modals/ModalA';
 import FilterModal from '@/components/common/modals/FilterModal';
-
 import ButtonA from '@/components/common/buttons/ButtonA';
-import './CoursesPage.css';
 
 const coursesData = [
   {
@@ -210,13 +208,10 @@ const CoursesPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      {/* Header with conditional blur */}
-      <div className={isFilterModalOpen ? 'blur-sm' : ''}>
-        <Header />
-      </div>
+      <Header />
 
       {/* Main content with conditional blur */}
-      <div className={isFilterModalOpen ? 'blur-sm' : ''}>
+      <main className={`flex-grow ${isFilterModalOpen ? 'blur-sm' : ''}`}>
         <h1 className="text-center text-4xl font-extrabold text-gray-800 my-10 uppercase">
           ALL LIVE LESSONS
         </h1>
@@ -258,7 +253,7 @@ const CoursesPage = () => {
             </div>
           )}
         </div>
-      </div>
+      </main>
 
       {/* Enroll Modal */}
       <ModalA 
