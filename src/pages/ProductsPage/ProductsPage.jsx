@@ -5,14 +5,14 @@ import ModalA from '@/components/common/modals/ModalA';
 import FilterModal from '@/components/common/modals/FilterModal';
 import ButtonA from '@/components/common/buttons/ButtonA';
 
-const coursesData = [
+const productsData = [
   {
     id: 1,
     title: 'Complete JavaScript Mastery',
     price: 89,
     students: 12,
     capacity: 27,
-    image: 'https://via.placeholder.com/300x200?text=JavaScript+Course',
+    image: 'https://via.placeholder.com/300x200?text=JavaScript+Product',
     category: 'Programming',
     level: 'Beginner',
     instructor: 'John Doe',
@@ -26,7 +26,7 @@ const coursesData = [
     price: 129,
     students: 21,
     capacity: 34,
-    image: 'https://via.placeholder.com/300x200?text=React+Course',
+    image: 'https://via.placeholder.com/300x200?text=React+Product',
     category: 'Programming',
     level: 'Advanced',
     instructor: 'Sarah Johnson',
@@ -58,7 +58,7 @@ const coursesData = [
     category: 'Data Science',
     level: 'Intermediate',
     instructor: 'Dr. Emily Chen',
-    description: 'Comprehensive data science course covering Python, machine learning, and statistical analysis.',
+    description: 'Comprehensive data science product covering Python, machine learning, and statistical analysis.',
     duration: '80 hours',
     rating: '4.7'
   },
@@ -78,19 +78,19 @@ const coursesData = [
   },
 ];
 
-const CoursesPage = () => {
+const ProductsPage = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [filters, setFilters] = useState({
     sortBy: 'bestSelling',
     category: [],
     level: [],
   });
-  const [displayedCourses, setDisplayedCourses] = useState(coursesData);
+  const [displayedProducts, setDisplayedProducts] = useState(productsData);
 
-  // Card configuration for courses
-  const courseCardConfig = {
+  // Card configuration for products
+  const productCardConfig = {
     showId: true,
     showTitle: true,
     showImage: true,
@@ -100,21 +100,21 @@ const CoursesPage = () => {
     imageHeight: 'h-48'
   };
 
-  // Modal configuration for courses
-  const courseModalConfig = {
+  // Modal configuration for products
+  const productModalConfig = {
     actionButtonText: 'Enroll Now',
     actionButtonColor: 'blue',
     pricePrefix: '$',
-    onActionClick: (courseData) => {
-      console.log('Enrolling in course:', courseData.id);
+    onActionClick: (productData) => {
+      console.log('Enrolling in product:', productData.id);
       // Add enrollment logic here
-      alert(`Enrolling in: ${courseData.title}`);
+      alert(`Enrolling in: ${productData.title}`);
     }
   };
 
-  // Filter modal configuration for courses
+  // Filter modal configuration for products
   const filterModalConfig = {
-    title: 'COURSE FILTERS',
+    title: 'PRODUCT FILTERS',
     sortOptions: [
       { value: 'bestSelling', label: 'Best Selling' },
       { value: 'priceLowest', label: 'Price (Lowest First)' },
@@ -130,7 +130,7 @@ const CoursesPage = () => {
     showBrands: false,
     showPriceRange: false,
     showRating: false,
-    buttonText: 'VIEW {count} COURSES',
+    buttonText: 'VIEW {count} PRODUCTS',
     sortLabel: 'SORT BY:',
     categoryLabel: 'CATEGORY',
     levelLabel: 'LEVEL'
@@ -140,14 +140,14 @@ const CoursesPage = () => {
     setIsFilterModalOpen(!isFilterModalOpen);
   };
 
-  const handleEnrollClick = (course) => {
-    setSelectedCourse(course);
+  const handleEnrollClick = (product) => {
+    setSelectedProduct(product);
     setIsEnrollModalOpen(true);
   };
 
   const closeEnrollModal = () => {
     setIsEnrollModalOpen(false);
-    setSelectedCourse(null);
+    setSelectedProduct(null);
   };
 
   const handleFiltersChange = (newFilters) => {
@@ -156,19 +156,19 @@ const CoursesPage = () => {
   };
 
   const applyFilters = (currentFilters) => {
-    let filtered = [...coursesData];
+    let filtered = [...productsData];
 
     // Apply category filter
     if (currentFilters.category && currentFilters.category.length > 0) {
-      filtered = filtered.filter((course) =>
-        currentFilters.category.includes(course.category)
+      filtered = filtered.filter((product) =>
+        currentFilters.category.includes(product.category)
       );
     }
 
     // Apply level filter
     if (currentFilters.level && currentFilters.level.length > 0) {
-      filtered = filtered.filter((course) =>
-        currentFilters.level.includes(course.level)
+      filtered = filtered.filter((product) =>
+        currentFilters.level.includes(product.level)
       );
     }
 
@@ -192,7 +192,7 @@ const CoursesPage = () => {
         break;
     }
     
-    setDisplayedCourses(filtered);
+    setDisplayedProducts(filtered);
   };
 
   const handleApplyFilters = () => {
@@ -200,10 +200,10 @@ const CoursesPage = () => {
     toggleFilterModal();
   };
 
-  const handleCardClick = (courseId) => {
-    console.log(`Navigating to course details for ID: ${courseId}`);
+  const handleCardClick = (productId) => {
+    console.log(`Navigating to product details for ID: ${productId}`);
     // In a real app, you'd use React Router:
-    // navigate(`/courses/${courseId}`);
+    // navigate(`/products/${productId}`);
   };
 
   return (
@@ -213,24 +213,24 @@ const CoursesPage = () => {
       {/* Main content with conditional blur */}
       <main className={`flex-grow ${isFilterModalOpen ? 'blur-sm' : ''}`}>
         <h1 className="text-center text-4xl font-extrabold text-gray-800 my-10 uppercase">
-          ALL COURSES
+          ALL PRODUCTS
         </h1>
 
         <div className="container mx-auto px-4 pb-10">
           <div className="flex justify-between items-center mb-6">
             <div className="text-2xl font-bold text-gray-700">
-              {displayedCourses.length} COURSES
+              {displayedProducts.length} PRODUCTS
             </div>
             <ButtonA onClick={toggleFilterModal} text="FILTER/SORT+" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {displayedCourses.map((course) => (
+            {displayedProducts.map((product) => (
               <Card 
-                key={course.id} 
-                data={course} 
-                config={courseCardConfig}
-                onClick={() => handleCardClick(course.id)}
+                key={product.id} 
+                data={product} 
+                config={productCardConfig}
+                onClick={() => handleCardClick(product.id)}
               >
                 <ButtonA 
                   text='Enroll' 
@@ -238,7 +238,7 @@ const CoursesPage = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    handleEnrollClick(course);
+                    handleEnrollClick(product);
                   }}
                 />
               </Card>
@@ -246,9 +246,9 @@ const CoursesPage = () => {
           </div>
 
           {/* No results message */}
-          {displayedCourses.length === 0 && (
+          {displayedProducts.length === 0 && (
             <div className="text-center py-16">
-              <div className="text-gray-500 text-xl mb-4">No courses found</div>
+              <div className="text-gray-500 text-xl mb-4">No products found</div>
               <div className="text-gray-400">Try adjusting your filters</div>
             </div>
           )}
@@ -259,8 +259,8 @@ const CoursesPage = () => {
       <ModalA 
         isOpen={isEnrollModalOpen}
         onClose={closeEnrollModal}
-        itemData={selectedCourse}
-        config={courseModalConfig}
+        itemData={selectedProduct}
+        config={productModalConfig}
       />
 
       {/* Filter Modal */}
@@ -270,11 +270,11 @@ const CoursesPage = () => {
         filters={filters}
         onFiltersChange={handleFiltersChange}
         onApplyFilters={handleApplyFilters}
-        resultCount={displayedCourses.length}
+        resultCount={displayedProducts.length}
         config={filterModalConfig}
       />
     </div>
   );
 };
 
-export default CoursesPage;
+export default ProductsPage;
