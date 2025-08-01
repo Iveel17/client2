@@ -4,9 +4,6 @@ import CoursesPage from './pages/CoursesPage/CoursesPage'
 import ProductsPage from './pages/ProductsPage/ProductsPage'
 import LiveLessonsPage from './pages/LiveLessonsPage/LiveLessonsPage'
 
-
-
-
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
