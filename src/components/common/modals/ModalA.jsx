@@ -1,31 +1,35 @@
 import React from 'react';
+import { useCart } from '@/hooks/useCart'; // Adjust path based on your project structure
 
 const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
+  // Destructure addItemToCart from the useCart hook
+  const { addItemToCart } = useCart();
+
+  // If modal is not open or no data, render nothing
   if (!isOpen || !itemData) return null;
 
   // Default configuration for different modal types
   const defaultConfig = {
     title: itemData.title,
-    subtitle: null, // e.g., "Course #2" or "Product ID: P001"
+    subtitle: null,
     showImage: true,
     showDescription: true,
     showPrice: true,
     pricePrefix: '$',
-    actionButtonText: 'Buy',
+    actionButtonText: 'Add to Cart',
     actionButtonColor: 'blue',
     onActionClick: null,
     imageHeight: 'h-48',
-    details: [], // Array of detail objects: [{ icon: '📊', label: 'Level', value: 'Advanced' }]
+    details: [],
     ...config
   };
 
-  // Extract common properties
-  const { 
+  const {
     id,
-    title, 
-    image, 
-    description, 
-    price, 
+    title,
+    image,
+    description,
+    price,
     level,
     instructor,
     category,
@@ -37,119 +41,27 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
     capacity,
   } = itemData;
 
-  // Generate subtitle
   const getSubtitle = () => {
     if (defaultConfig.subtitle) return defaultConfig.subtitle;
     if (id) return `#${id} ${title}`;
     return title;
   };
 
-  // Generate default details based on available data
   const generateDetails = () => {
     if (defaultConfig.details.length > 0) {
       return defaultConfig.details;
     }
 
     const details = [];
-
-    // Add level (for courses/lessons)
-    if (level) {
-      details.push({
-        icon: '📊',
-        label: 'Level',
-        value: level,
-        bgColor: 'bg-blue-100',
-        textColor: 'text-blue-600'
-      });
-    }
-
-    // Add category
-    if (category) {
-      details.push({
-        icon: '🏷️',
-        label: 'Category',
-        value: category,
-        bgColor: 'bg-purple-100',
-        textColor: 'text-purple-600'
-      });
-    }
-
-    // Add price
-    if (price !== undefined) {
-      details.push({
-        icon: '💰',
-        label: 'Price',
-        value: `${defaultConfig.pricePrefix}${price}`,
-        bgColor: 'bg-orange-100',
-        textColor: 'text-orange-600'
-      });
-    }
-
-    // Add instructor (for courses/lessons)
-    if (instructor) {
-      details.push({
-        icon: '👨‍🏫',
-        label: 'Instructor',
-        value: instructor,
-        bgColor: 'bg-green-100',
-        textColor: 'text-green-600'
-      });
-    }
-
-    // Add brand (for products)
-    if (brand) {
-      details.push({
-        icon: '🏢',
-        label: 'Brand',
-        value: brand,
-        bgColor: 'bg-gray-100',
-        textColor: 'text-gray-600'
-      });
-    }
-
-    // Add rating
-    if (rating) {
-      details.push({
-        icon: '⭐',
-        label: 'Rating',
-        value: rating,
-        bgColor: 'bg-yellow-100',
-        textColor: 'text-yellow-600'
-      });
-    }
-
-    // Add duration (for courses/lessons)
-    if (duration) {
-      details.push({
-        icon: '⏱️',
-        label: 'Duration',
-        value: duration,
-        bgColor: 'bg-indigo-100',
-        textColor: 'text-indigo-600'
-      });
-    }
-
-    // Add stock (for products)
-    if (stock !== undefined) {
-      details.push({
-        icon: '📦',
-        label: 'Stock',
-        value: stock,
-        bgColor: 'bg-teal-100',
-        textColor: 'text-teal-600'
-      });
-    }
-
-    // Add enrollment info (for courses/lessons)
-    if (students !== undefined && capacity !== undefined) {
-      details.push({
-        icon: '👥',
-        label: 'Enrolled',
-        value: `${students}/${capacity}`,
-        bgColor: 'bg-emerald-100',
-        textColor: 'text-emerald-600'
-      });
-    }
+    if (level) details.push({ icon: '📊', label: 'Level', value: level, bgColor: 'bg-blue-100', textColor: 'text-blue-600' });
+    if (category) details.push({ icon: '🏷️', label: 'Category', value: category, bgColor: 'bg-purple-100', textColor: 'text-purple-600' });
+    if (price !== undefined) details.push({ icon: '💰', label: 'Price', value: `${defaultConfig.pricePrefix}${price}`, bgColor: 'bg-orange-100', textColor: 'text-orange-600' });
+    if (instructor) details.push({ icon: '👨‍🏫', label: 'Instructor', value: instructor, bgColor: 'bg-green-100', textColor: 'text-green-600' });
+    if (brand) details.push({ icon: '🏢', label: 'Brand', value: brand, bgColor: 'bg-gray-100', textColor: 'text-gray-600' });
+    if (rating) details.push({ icon: '⭐', label: 'Rating', value: rating, bgColor: 'bg-yellow-100', textColor: 'text-yellow-600' });
+    if (duration) details.push({ icon: '⏱️', label: 'Duration', value: duration, bgColor: 'bg-indigo-100', textColor: 'text-indigo-600' });
+    if (stock !== undefined) details.push({ icon: '📦', label: 'Stock', value: stock, bgColor: 'bg-teal-100', textColor: 'text-teal-600' });
+    if (students !== undefined && capacity !== undefined) details.push({ icon: '👥', label: 'Enrolled', value: `${students}/${capacity}`, bgColor: 'bg-emerald-100', textColor: 'text-emerald-600' });
 
     return details;
   };
@@ -157,12 +69,27 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
   const handleActionClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
+    console.log("[ModalA] Action button clicked.");
+
     if (defaultConfig.onActionClick) {
+      console.log("[ModalA] Using custom onActionClick.");
       defaultConfig.onActionClick(itemData);
     } else {
-      console.log(`${defaultConfig.actionButtonText} clicked for:`, itemData.id);
+      console.log("[ModalA] Defaulting to addItemToCart.");
+      const itemToAdd = {
+        courseId: itemData.id,
+        title: itemData.title,
+        price: itemData.price,
+        image: itemData.image,
+        // Add quantity if your itemData doesn't always have it, e.g., quantity: 1
+        quantity: itemData.quantity || 1,
+      };
+      console.log("[ModalA] Attempting to add item:", itemToAdd);
+      addItemToCart(itemToAdd);
     }
+
+    onClose();
   };
 
   const details = generateDetails();
@@ -170,12 +97,12 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
   return (
     <>
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
         onClick={onClose}
       >
         {/* Modal Content */}
-        <div 
+        <div
           className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-hidden shadow-2xl transform transition-all"
           onClick={(e) => e.stopPropagation()}
         >
@@ -196,17 +123,17 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
           {defaultConfig.showImage && (
             <div className={`relative ${defaultConfig.imageHeight} bg-gradient-to-br from-gray-800 to-gray-900`}>
               {image ? (
-                <img 
-                  src={image} 
+                <img
+                  src={image}
                   alt={title}
                   className="w-full h-full object-cover"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="text-white text-6xl">
-                    {category === 'Programming' ? '⚛️' : 
-                     category === 'Design' ? '🎨' : 
-                     category === 'Marketing' ? '📈' : 
+                    {category === 'Programming' ? '⚛️' :
+                     category === 'Design' ? '🎨' :
+                     category === 'Marketing' ? '📈' :
                      category === 'Data Science' ? '📊' : '📚'}
                   </div>
                 </div>
@@ -245,7 +172,7 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
             )}
 
             {/* Action Button */}
-            <button 
+            <button
               type="button"
               onClick={handleActionClick}
               className={`w-full bg-${defaultConfig.actionButtonColor}-600 hover:bg-${defaultConfig.actionButtonColor}-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 text-sm`}
