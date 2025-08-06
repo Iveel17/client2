@@ -1,0 +1,47 @@
+[
+  {
+    "id": "P001",
+    "title": "Ergonomic Mechanical Keyboard",
+    "image": "https://placehold.co/600x400/C2E0FF/000?text=Keyboard",
+    "price": 120.00,
+    "description": "High-quality mechanical keyboard designed for comfort and efficiency, perfect for long coding sessions.",
+    "brand": "TechGear",
+    "stock": 50,
+    "category": "Hardware",
+    "rating": 4.6
+  },
+  {
+    "id": "P002",
+    "title": "Noise-Cancelling Headphones",
+    "image": "https://placehold.co/600x400/FFC2E0/000?text=Headphones",
+    "price": 180.00,
+    "description": "Immersive audio experience with industry-leading noise cancellation. Ideal for focus and entertainment.",
+    "brand": "AudioPro",
+    "stock": 30,
+    "category": "Audio",
+    "rating": 4.7,
+    "discount": 5
+  },
+  {
+    "id": "P003",
+    "title": "Portable SSD 1TB",
+    "image": "https://placehold.co/600x400/C2FFC2/000?text=SSD",
+    "price": 95.00,
+    "description": "Ultra-fast and compact 1TB portable solid-state drive for all your storage needs on the go.",
+    "brand": "DataSwift",
+    "stock": 75,
+    "category": "Storage",
+    "rating": 4.8
+  },
+  {
+    "id": "P004",
+    "title": "4K Ultra HD Monitor",
+    "image": "https://placehold.co/600x400/FFFACD/000?text=Monitor",
+    "price": 350.00,
+    "description": "Stunning 4K resolution monitor for crisp visuals and enhanced productivity or gaming.",
+    "brand": "VisualEdge",
+    "stock": 20,
+    "category": "Display",
+    "rating": 4.5
+  }
+]

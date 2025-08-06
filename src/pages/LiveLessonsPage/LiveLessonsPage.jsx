@@ -5,78 +5,7 @@ import ModalA from '@/components/common/modals/ModalA';
 import FilterModal from '@/components/common/modals/FilterModal';
 import ButtonA from '@/components/common/buttons/ButtonA';
 
-const live_lessonsData = [
-  {
-    id: 1,
-    title: 'Complete JavaScript Mastery',
-    price: 89,
-    students: 12,
-    capacity: 27,
-    image: 'https://via.placeholder.com/300x200?text=JavaScript+LiveLesson',
-    category: 'Programming',
-    level: 'Beginner',
-    instructor: 'John Doe',
-    description: 'Master JavaScript from basics to advanced concepts with hands-on projects and real-world applications.',
-    duration: '40 hours',
-    rating: '4.8'
-  },
-  {
-    id: 2,
-    title: 'Advanced React Development',
-    price: 129,
-    students: 21,
-    capacity: 34,
-    image: 'https://via.placeholder.com/300x200?text=React+LiveLesson',
-    category: 'Programming',
-    level: 'Advanced',
-    instructor: 'Sarah Johnson',
-    description: 'Take your React skills to the next level with advanced patterns, hooks, and performance optimization.',
-    duration: '60 hours',
-    rating: '4.9'
-  },
-  {
-    id: 3,
-    title: 'Digital Marketing Fundamentals',
-    price: 69,
-    students: 15,
-    capacity: 18,
-    image: 'https://via.placeholder.com/300x200?text=Digital+Marketing',
-    category: 'Marketing',
-    level: 'Beginner',
-    instructor: 'Mike Wilson',
-    description: 'Learn the fundamentals of digital marketing including SEO, social media, and content marketing strategies.',
-    duration: '30 hours',
-    rating: '4.6'
-  },
-  {
-    id: 4,
-    title: 'Data Science with Python',
-    price: 150,
-    students: 10,
-    capacity: 25,
-    image: 'https://via.placeholder.com/300x200?text=Data+Science',
-    category: 'Data Science',
-    level: 'Intermediate',
-    instructor: 'Dr. Emily Chen',
-    description: 'Comprehensive data science live_lesson covering Python, machine learning, and statistical analysis.',
-    duration: '80 hours',
-    rating: '4.7'
-  },
-  {
-    id: 5,
-    title: 'UI/UX Design Principles',
-    price: 99,
-    students: 8,
-    capacity: 20,
-    image: 'https://via.placeholder.com/300x200?text=UI/UX+Design',
-    category: 'Design',
-    level: 'Intermediate',
-    instructor: 'Alex Rodriguez',
-    description: 'Learn modern UI/UX design principles, user research, and create stunning user interfaces.',
-    duration: '50 hours',
-    rating: '4.5'
-  },
-];
+import live_lessonsData from '@/data/liveLessons.json'; // Adjust path as needed
 
 const LiveLessonsPage = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);

@@ -1,0 +1,60 @@
+[
+  {
+    "id": "C001",
+    "title": "React Masterclass: Build Modern Web Apps",
+    "image": "https://placehold.co/600x400/FFDDC1/000?text=React+Course",
+    "price": 199.99,
+    "description": "Dive deep into React.js and build powerful, interactive user interfaces. Learn hooks, context API, routing, and state management.",
+    "instructor": "Jane Doe",
+    "category": "Programming",
+    "level": "Advanced",
+    "rating": 4.8,
+    "duration": "25 hours",
+    "students": 1200,
+    "capacity": 1500,
+    "discount": 10
+  },
+  {
+    "id": "C002",
+    "title": "Full-Stack Web Development with MERN",
+    "image": "https://placehold.co/600x400/D4EDDA/000?text=MERN+Stack",
+    "price": 249.99,
+    "description": "Master the MERN stack (MongoDB, Express, React, Node.js) to build robust full-stack applications from scratch.",
+    "instructor": "John Smith",
+    "category": "Programming",
+    "level": "Intermediate",
+    "rating": 4.7,
+    "duration": "40 hours",
+    "students": 950,
+    "capacity": 1000
+  },
+  {
+    "id": "C003",
+    "title": "UI/UX Design Fundamentals",
+    "image": "https://placehold.co/600x400/E0F2F7/000?text=UI/UX+Design",
+    "price": 149.99,
+    "description": "Learn the principles of user interface (UI) and user experience (UX) design. Create intuitive and beautiful digital products.",
+    "instructor": "Emily White",
+    "category": "Design",
+    "level": "Beginner",
+    "rating": 4.5,
+    "duration": "18 hours",
+    "students": 700,
+    "capacity": 800,
+    "discount": 15
+  },
+  {
+    "id": "C004",
+    "title": "Data Science with Python",
+    "image": "https://placehold.co/600x400/F0F0F0/000?text=Data+Science",
+    "price": 299.99,
+    "description": "Explore data analysis, machine learning, and data visualization using Python and popular libraries like Pandas, NumPy, and Scikit-learn.",
+    "instructor": "David Green",
+    "category": "Data Science",
+    "level": "Intermediate",
+    "rating": 4.9,
+    "duration": "30 hours",
+    "students": 1500,
+    "capacity": 1500
+  }
+]
