@@ -29,13 +29,6 @@ const CoursesPage = () => {
     imageHeight: 'h-48'
   };
 
-  // Modal configuration for courses
-  const courseModalConfig = {
-    actionButtonText: 'Enroll Now',
-    actionButtonColor: 'blue',
-    pricePrefix: '$',
-  };
-
   // Filter modal configuration for courses
   const filterModalConfig = {
     title: 'COURSE FILTERS',
@@ -184,7 +177,6 @@ const CoursesPage = () => {
         isOpen={isEnrollModalOpen}
         onClose={closeEnrollModal}
         itemData={selectedCourse}
-        config={courseModalConfig}
       />
 
       {/* Filter Modal */}
