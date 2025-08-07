@@ -59,7 +59,7 @@ const CartPage = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">Items in Cart</h2>
           {cartItems.map((item) => (
             <div
-              key={item.courseId} // Assuming courseId is unique for items
+              key={item.id} // Using id instead of courseId
               className="flex flex-col sm:flex-row items-center justify-between border-b border-gray-200 py-4 last:border-b-0"
             >
               {/* Item Image and Details */}
@@ -74,22 +74,23 @@ const CartPage = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800">{item.title || item.name || 'Unknown Item'}</h3>
                   <p className="text-sm text-gray-600">Price: ${item.price ? item.price.toFixed(2) : 'N/A'}</p>
+                  <p className="text-xs text-gray-500">ID: {item.id}</p>
                 </div>
               </div>
 
               {/* Quantity and Actions */}
               <div className="flex items-center space-x-4">
-                <label htmlFor={`quantity-${item.courseId}`} className="sr-only">Quantity</label>
+                <label htmlFor={`quantity-${item.id}`} className="sr-only">Quantity</label>
                 <input
-                  id={`quantity-${item.courseId}`}
+                  id={`quantity-${item.id}`}
                   type="number"
                   min="1"
                   value={item.quantity}
-                  onChange={(e) => updateItemQuantity(item.courseId, parseInt(e.target.value))}
+                  onChange={(e) => updateItemQuantity(item.id, parseInt(e.target.value))}
                   className="w-20 p-2 border border-gray-300 rounded-md text-center focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                 />
                 <button
-                  onClick={() => removeItemFromCart(item.courseId)}
+                  onClick={() => removeItemFromCart(item.id)}
                   className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
                   aria-label={`Remove ${item.title || 'item'} from cart`}
                 >

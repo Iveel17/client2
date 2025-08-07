@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import NotificationToast from '../NotificationToast'; // Adjust path based on your project structure
 import { useCart } from '@/hooks/useCart'; // Adjust path based on your project structure
 
 const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
   // Destructure addItemToCart from the useCart hook
   const { addItemToCart } = useCart();
+  
+  // State for controlling NotificationToast visibility
+  const [toast, setToast] = useState({ isVisible: false, message: '', type: 'success' });
 
   // If modal is not open or no data, render nothing
   if (!isOpen || !itemData) return null;
@@ -78,18 +82,29 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
     } else {
       console.log("[ModalA] Defaulting to addItemToCart.");
       const itemToAdd = {
-        courseId: itemData.id,
+        id: itemData.id,
         title: itemData.title,
         price: itemData.price,
         image: itemData.image,
-        // Add quantity if your itemData doesn't always have it, e.g., quantity: 1
         quantity: itemData.quantity || 1,
       };
       console.log("[ModalA] Attempting to add item:", itemToAdd);
       addItemToCart(itemToAdd);
+      
+      // Show toast notification IMMEDIATELY
+      setToast({
+        isVisible: true,
+        message: `${itemData.title} added to cart!`,
+        type: 'success'
+      });
+      
+      console.log("[ModalA] Toast should be visible now");
     }
 
-    onClose();
+    // Close modal after a short delay to let user see the toast
+    setTimeout(() => {
+      onClose();
+    }, 500);
   };
 
   const details = generateDetails();
@@ -182,6 +197,15 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
           </div>
         </div>
       </div>
+
+      {/* Notification Toast - Renders outside modal but with higher z-index */}
+      <NotificationToast
+        message={toast.message}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
+        type={toast.type}
+        duration={3000}
+      />
     </>
   );
 };

@@ -34,11 +34,6 @@ const CoursesPage = () => {
     actionButtonText: 'Enroll Now',
     actionButtonColor: 'blue',
     pricePrefix: '$',
-    onActionClick: (courseData) => {
-      console.log('Enrolling in course:', courseData.id);
-      // Add enrollment logic here
-      alert(`Enrolling in: ${courseData.title}`);
-    }
   };
 
   // Filter modal configuration for courses
