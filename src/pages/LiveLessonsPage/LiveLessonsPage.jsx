@@ -34,11 +34,6 @@ const LiveLessonsPage = () => {
     actionButtonText: 'Enroll Now',
     actionButtonColor: 'blue',
     pricePrefix: '$',
-    onActionClick: (live_lessonData) => {
-      console.log('Enrolling in live_lesson:', live_lessonData.id);
-      // Add enrollment logic here
-      alert(`Enrolling in: ${live_lessonData.title}`);
-    }
   };
 
   // Filter modal configuration for live_lessons

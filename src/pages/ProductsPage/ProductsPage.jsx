@@ -34,11 +34,6 @@ const ProductsPage = () => {
     actionButtonText: 'Enroll Now',
     actionButtonColor: 'blue',
     pricePrefix: '$',
-    onActionClick: (productData) => {
-      console.log('Enrolling in product:', productData.id);
-      // Add enrollment logic here
-      alert(`Enrolling in: ${productData.title}`);
-    }
   };
 
   // Filter modal configuration for products
