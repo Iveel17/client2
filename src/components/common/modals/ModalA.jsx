@@ -111,14 +111,19 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop with blur effect */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
         onClick={onClose}
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)'
+        }}
       >
-        {/* Modal Content */}
+        {/* Modal Content - Made more responsive */}
         <div
-          className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-hidden shadow-2xl transform transition-all"
+          className="bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl transform transition-all relative"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close Button */}
@@ -129,7 +134,7 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
               e.stopPropagation();
               onClose();
             }}
-            className="absolute top-4 right-4 z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all"
+            className="absolute top-4 right-4 z-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all shadow-lg text-xl font-bold"
           >
             ×
           </button>
@@ -159,38 +164,49 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
           {/* Modal Body */}
           <div className="p-6">
             {/* Title */}
-            <h2 className="text-xl font-bold text-gray-800 mb-4 leading-tight">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 leading-tight pr-8">
               {getSubtitle()}
             </h2>
 
             {/* Description */}
             {defaultConfig.showDescription && description && (
-              <p className="text-gray-600 text-sm mb-6 leading-relaxed">
+              <p className="text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
                 {description}
               </p>
             )}
 
-            {/* Details */}
+            {/* Details - Made more responsive */}
             {details.length > 0 && (
-              <div className="space-y-4 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                 {details.map((detail, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className={`w-6 h-6 ${detail.bgColor} rounded flex items-center justify-center`}>
-                      <span className={`${detail.textColor} text-xs`}>{detail.icon}</span>
+                  <div key={index} className="flex items-center gap-3 p-2 rounded-lg bg-gray-50">
+                    <div className={`w-8 h-8 ${detail.bgColor} rounded-full flex items-center justify-center flex-shrink-0`}>
+                      <span className="text-sm">{detail.icon}</span>
                     </div>
-                    <span className="text-gray-700 text-sm font-medium">
-                      {detail.label}: {detail.value}
-                    </span>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-gray-500 text-xs font-medium block">
+                        {detail.label}
+                      </span>
+                      <span className={`${detail.textColor} text-sm font-semibold block truncate`}>
+                        {detail.value}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Action Button */}
+            {/* Action Button with better color classes */}
             <button
               type="button"
               onClick={handleActionClick}
-              className={`w-full bg-${defaultConfig.actionButtonColor}-600 hover:bg-${defaultConfig.actionButtonColor}-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 text-sm`}
+              className={`w-full ${
+                defaultConfig.actionButtonColor === 'blue' ? 'bg-blue-600 hover:bg-blue-700' :
+                defaultConfig.actionButtonColor === 'green' ? 'bg-green-600 hover:bg-green-700' :
+                defaultConfig.actionButtonColor === 'red' ? 'bg-red-600 hover:bg-red-700' :
+                defaultConfig.actionButtonColor === 'purple' ? 'bg-purple-600 hover:bg-purple-700' :
+                'bg-blue-600 hover:bg-blue-700'
+              } text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 text-sm md:text-base`}
             >
               {defaultConfig.actionButtonText}
             </button>
