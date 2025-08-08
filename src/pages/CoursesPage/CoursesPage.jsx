@@ -146,14 +146,14 @@ const CoursesPage = () => {
       {/* Main content - Remove blur effect from here since modal handles backdrop */}
       <main className="flex-grow">
         <h1 className="text-center text-2xl md:text-4xl font-extrabold text-gray-800 my-6 md:my-10 uppercase px-4">
-          ALL LIVE LESSONS
+          ALL COURSES
         </h1>
 
         <div className="container mx-auto px-4 pb-10">
           {/* Header with responsive text */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <div className="text-xl md:text-2xl font-bold text-gray-700">
-              {displayedCourses.length} LIVE LESSONS
+              {displayedCourses.length} COURSES
             </div>
             <ButtonA onClick={toggleFilterModal} text="FILTER/SORT+" />
           </div>

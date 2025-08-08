@@ -18,7 +18,7 @@ const LiveLessonsPage = () => {
   });
   const [displayedLiveLessons, setDisplayedLiveLessons] = useState(live_lessonsData);
 
-  // Card configuration for live_lessons
+  // Card configuration for live_lessons - Made more flexible
   const live_lessonCardConfig = {
     showId: true,
     showTitle: true,
@@ -26,14 +26,23 @@ const LiveLessonsPage = () => {
     showPrice: true,
     showStatus: true,
     pricePrefix: '$',
-    imageHeight: 'h-48'
+    imageHeight: 'h-48',
+    // Ensure cards have consistent height
+    cardHeight: 'min-h-[400px]',
+    // Add some responsive classes
+    className: 'flex flex-col h-full'
   };
 
-  // Modal configuration for live_lessons
-  const live_lessonModalConfig = {
+  // Enhanced modal configuration for live_lessons
+  const enrollModalConfig = {
+    title: 'LiveLesson Details',
     actionButtonText: 'Enroll Now',
-    actionButtonColor: 'blue',
+    actionButtonColor: 'green',
+    showImage: true,
+    showDescription: true,
+    showPrice: true,
     pricePrefix: '$',
+    imageHeight: 'h-56'
   };
 
   // Filter modal configuration for live_lessons
@@ -134,38 +143,45 @@ const LiveLessonsPage = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
 
-      {/* Main content with conditional blur */}
-      <main className={`flex-grow ${isFilterModalOpen ? 'blur-sm' : ''}`}>
-        <h1 className="text-center text-4xl font-extrabold text-gray-800 my-10 uppercase">
+      {/* Main content - Remove blur effect from here since modal handles backdrop */}
+      <main className="flex-grow">
+        <h1 className="text-center text-2xl md:text-4xl font-extrabold text-gray-800 my-6 md:my-10 uppercase px-4">
           ALL LIVE LESSONS
         </h1>
 
         <div className="container mx-auto px-4 pb-10">
-          <div className="flex justify-between items-center mb-6">
-            <div className="text-2xl font-bold text-gray-700">
+          {/* Header with responsive text */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <div className="text-xl md:text-2xl font-bold text-gray-700">
               {displayedLiveLessons.length} LIVE LESSONS
             </div>
             <ButtonA onClick={toggleFilterModal} text="FILTER/SORT+" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {/* Responsive grid with better breakpoints */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
             {displayedLiveLessons.map((live_lesson) => (
-              <Card 
-                key={live_lesson.id} 
-                data={live_lesson} 
-                config={live_lessonCardConfig}
-                onClick={() => handleCardClick(live_lesson.id)}
-              >
-                <ButtonA 
-                  text='Enroll' 
-                  className='w-full'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleEnrollClick(live_lesson);
-                  }}
-                />
-              </Card>
+              <div key={live_lesson.id} className="h-full">
+                <Card 
+                  data={live_lesson} 
+                  config={live_lessonCardConfig}
+                  onClick={() => handleCardClick(live_lesson.id)}
+                  className="h-full flex flex-col"
+                >
+                  {/* Always show enroll button - positioned at bottom */}
+                  <div className="mt-auto pt-4">
+                    <ButtonA 
+                      text='Enroll' 
+                      className='w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors'
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleEnrollClick(live_lesson);
+                      }}
+                    />
+                  </div>
+                </Card>
+              </div>
             ))}
           </div>
 
@@ -179,12 +195,12 @@ const LiveLessonsPage = () => {
         </div>
       </main>
 
-      {/* Enroll Modal */}
+      {/* Enroll Modal with custom config */}
       <ModalA 
         isOpen={isEnrollModalOpen}
         onClose={closeEnrollModal}
         itemData={selectedLiveLesson}
-        config={live_lessonModalConfig}
+        config={enrollModalConfig}
       />
 
       {/* Filter Modal */}
