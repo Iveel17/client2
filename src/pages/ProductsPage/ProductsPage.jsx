@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card from '@/components/common/Card';
 import Header from '@/components/layout/Header/Header';
-import ModalA from '@/components/common/modals/ModalA';
+import ModalB from '@/components/common/modals/ModalB';
 import FilterModal from '@/components/common/modals/FilterModal';
 import ButtonA from '@/components/common/buttons/ButtonA';
 
@@ -31,7 +31,7 @@ const ProductsPage = () => {
 
   // Modal configuration for products
   const productModalConfig = {
-    actionButtonText: 'Enroll Now',
+    actionButtonText: 'Add to Cart',
     actionButtonColor: 'blue',
     pricePrefix: '$',
   };
@@ -157,7 +157,7 @@ const ProductsPage = () => {
                 onClick={() => handleCardClick(product.id)}
               >
                 <ButtonA 
-                  text='Enroll' 
+                  text='Buy' 
                   className='w-full'
                   onClick={(e) => {
                     e.preventDefault();
@@ -180,7 +180,7 @@ const ProductsPage = () => {
       </main>
 
       {/* Enroll Modal */}
-      <ModalA 
+      <ModalB 
         isOpen={isEnrollModalOpen}
         onClose={closeEnrollModal}
         itemData={selectedProduct}

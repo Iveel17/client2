@@ -36,7 +36,7 @@ const LiveLessonsPage = () => {
   // Enhanced modal configuration for live_lessons
   const enrollModalConfig = {
     title: 'LiveLesson Details',
-    actionButtonText: 'Enroll Now',
+    actionButtonText: 'Add to Cart',
     actionButtonColor: 'green',
     showImage: true,
     showDescription: true,

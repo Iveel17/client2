@@ -36,7 +36,7 @@ const CoursesPage = () => {
   // Enhanced modal configuration for courses
   const enrollModalConfig = {
     title: 'Course Details',
-    actionButtonText: 'Enroll Now',
+    actionButtonText: 'Add to Cart',
     actionButtonColor: 'green',
     showImage: true,
     showDescription: true,
