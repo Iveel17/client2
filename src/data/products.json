@@ -1,6 +1,7 @@
 [
   {
     "id": "P001",
+    "type": "product",
     "title": "Ergonomic Mechanical Keyboard",
     "image": "https://placehold.co/600x400/C2E0FF/000?text=Keyboard",
     "price": 120.00,
@@ -12,6 +13,7 @@
   },
   {
     "id": "P002",
+    "type": "product",
     "title": "Noise-Cancelling Headphones",
     "image": "https://placehold.co/600x400/FFC2E0/000?text=Headphones",
     "price": 180.00,
@@ -24,6 +26,7 @@
   },
   {
     "id": "P003",
+    "type": "product",
     "title": "Portable SSD 1TB",
     "image": "https://placehold.co/600x400/C2FFC2/000?text=SSD",
     "price": 95.00,
@@ -35,6 +38,7 @@
   },
   {
     "id": "P004",
+    "type": "product",
     "title": "4K Ultra HD Monitor",
     "image": "https://placehold.co/600x400/FFFACD/000?text=Monitor",
     "price": 350.00,

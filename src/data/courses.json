@@ -1,6 +1,7 @@
 [
   {
     "id": "C001",
+    "type": "course",
     "title": "React Masterclass: Build Modern Web Apps",
     "image": "https://placehold.co/600x400/FFDDC1/000?text=React+Course",
     "price": 199.99,
@@ -16,6 +17,7 @@
   },
   {
     "id": "C002",
+    "type": "course",
     "title": "Full-Stack Web Development with MERN",
     "image": "https://placehold.co/600x400/D4EDDA/000?text=MERN+Stack",
     "price": 249.99,
@@ -30,6 +32,7 @@
   },
   {
     "id": "C003",
+    "type": "course",
     "title": "UI/UX Design Fundamentals",
     "image": "https://placehold.co/600x400/E0F2F7/000?text=UI/UX+Design",
     "price": 149.99,
@@ -45,6 +48,7 @@
   },
   {
     "id": "C004",
+    "type": "course",
     "title": "Data Science with Python",
     "image": "https://placehold.co/600x400/F0F0F0/000?text=Data+Science",
     "price": 299.99,

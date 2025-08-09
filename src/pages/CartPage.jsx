@@ -75,27 +75,63 @@ const CartPage = () => {
                   <h3 className="text-lg font-semibold text-gray-800">{item.title || item.name || 'Unknown Item'}</h3>
                   <p className="text-sm text-gray-600">Price: ${item.price ? item.price.toFixed(2) : 'N/A'}</p>
                   <p className="text-xs text-gray-500">ID: {item.id}</p>
+                  {/* Debug: Show item type and more details */}
+                  <p className="text-xs text-blue-500">Type: "{item.type || 'undefined'}"</p>
+                  <p className="text-xs text-green-500">Raw item: {JSON.stringify({type: item.type, id: item.id})}</p>
                 </div>
               </div>
 
               {/* Quantity and Actions */}
               <div className="flex items-center space-x-4">
-                <label htmlFor={`quantity-${item.id}`} className="sr-only">Quantity</label>
-                <input
-                  id={`quantity-${item.id}`}
-                  type="number"
-                  min="1"
-                  value={item.quantity}
-                  onChange={(e) => updateItemQuantity(item.id, parseInt(e.target.value))}
-                  className="w-20 p-2 border border-gray-300 rounded-md text-center focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                />
-                <button
-                  onClick={() => removeItemFromCart(item.id)}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
-                  aria-label={`Remove ${item.title || 'item'} from cart`}
-                >
-                  Remove
-                </button>
+                {/* Debug logging */}
+                {console.log(`Item ${item.id}: type="${item.type}", comparison result:`, item.type === "product")}
+                {item.type === "product" ? (
+                  // For products: Show editable quantity with increment/decrement
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm text-gray-500">Qty:</span>
+                      <label htmlFor={`quantity-${item.id}`} className="sr-only">Quantity</label>
+                      <input
+                        id={`quantity-${item.id}`}
+                        type="number"
+                        min="1"
+                        value={item.quantity || 1}
+                        onChange={(e) => {
+                          const newQuantity = parseInt(e.target.value) || 1;
+                          updateItemQuantity(item.id, Math.max(1, newQuantity));
+                        }}
+                        className="w-16 p-2 border border-gray-300 rounded-md text-center focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                      />
+                    </div>
+                    <button
+                      onClick={() => removeItemFromCart(item.id)}
+                      className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
+                      aria-label={`Remove ${item.title || 'item'} from cart`}
+                    >
+                      Remove
+                    </button>
+                  </>
+                ) : (
+                  // For non-products (courses, live-lessons): Fixed quantity of 1
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm text-gray-500">Qty:</span>
+                      <input
+                        type="number"
+                        value="1"
+                        readOnly
+                        className="w-16 p-2 border border-gray-300 rounded-md text-center bg-gray-100 cursor-not-allowed"
+                      />
+                    </div>
+                    <button
+                      onClick={() => removeItemFromCart(item.id)}
+                      className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
+                      aria-label={`Remove ${item.title || 'item'} from cart`}
+                    >
+                      Remove
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))}

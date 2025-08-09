@@ -82,6 +82,7 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
     } else {
       console.log("[ModalA] Defaulting to addItemToCart.");
       const itemToAdd = {
+        type: itemData.type,
         id: itemData.id,
         title: itemData.title,
         price: itemData.price,

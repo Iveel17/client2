@@ -1,6 +1,7 @@
 [
   {
     "id": "LL001",
+    "type": "live-lesson",
     "title": "Live Q&A: React Hooks Best Practices",
     "image": "https://placehold.co/600x400/E6E6FA/000?text=Live+React",
     "price": 29.99,
@@ -15,6 +16,7 @@
   },
   {
     "id": "LL002",
+    "type": "live-lesson",
     "title": "Mastering Figma: Collaborative Design Session",
     "image": "https://placehold.co/600x400/ADD8E6/000?text=Live+Figma",
     "price": 39.99,
@@ -29,6 +31,7 @@
   },
   {
     "id": "LL003",
+    "type": "live-lesson",
     "title": "Introduction to Blockchain & Web3",
     "image": "https://placehold.co/600x400/FFB6C1/000?text=Live+Web3",
     "price": 49.99,

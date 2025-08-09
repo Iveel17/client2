@@ -83,6 +83,7 @@ export const CartProvider = ({ children }) => {
         console.log("[CartProvider] Item already in cart, updating quantity. New cart:", newCart);
       } else {
         const newItem = {
+          type: item.type,
           id: item.id,
           title: item.title,
           price: item.price,
