@@ -76,8 +76,7 @@ const CartPage = () => {
                   <p className="text-sm text-gray-600">Price: ${item.price ? item.price.toFixed(2) : 'N/A'}</p>
                   <p className="text-xs text-gray-500">ID: {item.id}</p>
                   {/* Debug: Show item type and more details */}
-                  <p className="text-xs text-blue-500">Type: "{item.type || 'undefined'}"</p>
-                  <p className="text-xs text-green-500">Raw item: {JSON.stringify({type: item.type, id: item.id})}</p>
+                  <p className="text-xs text-gray-500">Type: "{item.type || 'undefined'}"</p>
                 </div>
               </div>
 
