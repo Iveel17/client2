@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { CartContext } from './CartContext.js'; // Ensure correct casing: CartContext.js
+import { CartContext } from './cartContext.js'; // Ensure correct casing: CartContext.js
 
 const cartService = {
   fetchCart: async () => {

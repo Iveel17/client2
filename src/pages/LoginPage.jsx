@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header/Header'; 
-import { loginUser } from '@/services/authService'; // Step 2 connection
+import { useAuth } from '@/hooks/useAuth'; // Updated import
 
-// Reusable InputGroup Component
-const InputGroup = ({ label, type, placeholder, id, value, onChange }) => {
+// Reusable InputGroup Component with error display
+const InputGroup = ({ label, type, placeholder, id, value, onChange, error }) => {
   return (
     <div className="mb-4">
       <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">
@@ -16,29 +16,53 @@ const InputGroup = ({ label, type, placeholder, id, value, onChange }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out"
+        className={`w-full px-4 py-2 border rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out ${
+          error ? 'border-red-500 bg-red-50' : 'border-gray-300'
+        }`}
       />
+      {error && <div className="text-red-500 text-sm mt-1">{error}</div>}
     </div>
   );
 };
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   
-  // Step 1: State for form inputs
+  // Form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Step 2: Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setErrors({});
+
+    // Basic client-side validation
+    const newErrors = {};
+    if (!email.trim()) newErrors.email = 'Email is required';
+    if (!password.trim()) newErrors.password = 'Password is required';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const data = await loginUser(email, password); // Calls backend
-      localStorage.setItem('token', data.token); // Store JWT
-      alert('Login successful!');
-      navigate('/courses'); // Redirect after login (change path as needed)
-    } catch (err) {
-      alert(err.message || 'Login failed');
+      const result = await login({ email, password });
+      
+      if (result.success) {
+        navigate('/'); // Redirect to homepage as requested
+      } else {
+        setErrors(result.errors || { general: 'Login failed' });
+      }
+    } catch {
+      setErrors({ general: 'An unexpected error occurred' });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,8 +74,14 @@ const LoginPage = () => {
         <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-6 sm:p-8 md:p-12 lg:p-16 transform transition-all duration-300 hover:scale-[1.01]">
           <div className="text-center mb-8">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">Welcome Back</h1>
-            <p className="text-gray-600 text-lg">Sign in to your tutor account</p>
+            <p className="text-gray-600 text-lg">Sign in to your account</p>
           </div>
+
+          {errors.general && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+              {errors.general}
+            </div>
+          )}
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             <InputGroup 
@@ -61,6 +91,7 @@ const LoginPage = () => {
               id="email" 
               value={email}
               onChange={setEmail}
+              error={errors.email}
             />
             <InputGroup 
               label="Password" 
@@ -69,6 +100,7 @@ const LoginPage = () => {
               id="password" 
               value={password}
               onChange={setPassword}
+              error={errors.password}
             />
 
             <div className="flex items-center justify-between text-sm">
@@ -80,16 +112,24 @@ const LoginPage = () => {
                 />
                 <label htmlFor="rememberMe" className="ml-2 text-gray-700">Remember me</label>
               </div>
-              <button type="button" className="font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md">
+              <button 
+                type="button" 
+                className="font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md"
+              >
                 Forgot password?
               </button>
             </div>
 
             <button 
               type="submit" 
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold text-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:-translate-y-0.5 shadow-lg"
+              disabled={isLoading}
+              className={`w-full py-3 px-4 rounded-lg font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out transform shadow-lg ${
+                isLoading 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-blue-600 text-white hover:bg-blue-700 hover:-translate-y-0.5'
+              }`}
             >
-              Log In
+              {isLoading ? 'Logging in...' : 'Log In'}
             </button>
           </form>
 

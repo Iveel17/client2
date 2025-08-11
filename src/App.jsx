@@ -9,6 +9,9 @@ import AboutPage from './pages/AboutPage'
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
+import ProtectedRoute from '@/components/ProtectedRoute';
+import Dashboard from '@/pages/Dashboard';
 import './App.css'
 
 function App() {
@@ -24,6 +27,11 @@ function App() {
             <Route path="/live-lessons" element={<LiveLessonsPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
             {/* Add more routes as needed */}
           </Routes>
         </Router>
