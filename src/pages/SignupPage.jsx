@@ -80,7 +80,7 @@ const SignupPage = () => {
       // Prepare data for backend (convert termsAgreed to string as expected)
       const signupData = {
         ...formData,
-        termsAgreed: formData.termsAgreed ? 'true' : 'false'
+        termsAgreed: formData.termsAgreed ? true : 'false'
       };
 
       const result = await signup(signupData);

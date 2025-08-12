@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import './Header.css'; // Assuming this is no longer needed if using pure Tailwind
 import { Link } from 'react-router-dom';
-import AuthSection from './AuthSection/AuthSection';
+import AuthSection from './AuthSection';
 import Logo from '@/assets/icons/UpgradeLogo.jpg';
 
 // Reusable Navigation Link Component
