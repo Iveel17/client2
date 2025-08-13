@@ -48,6 +48,18 @@ const CartPage = () => {
     );
   }
 
+  // Helper function to get max allowed quantity for an item
+  const getMaxQuantity = (item) => {
+    if (item.type === "product") {
+      // Since stock is not being passed to cart items, we need to use a fallback
+      // This is a temporary fix - the real fix should be in ModalB to pass stock
+      const maxQty = item.stock || 20; // Using 20 as fallback based on your modal image
+      return maxQty;
+    } else {
+      return 1; // Non-products (courses, live-lessons) can only have quantity 1
+    }
+  };
+
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8 bg-gray-50 min-h-screen">
       <Header />
@@ -57,83 +69,161 @@ const CartPage = () => {
         {/* Cart Items List */}
         <div className="lg:col-span-2 bg-white rounded-xl shadow-lg p-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">Items in Cart</h2>
-          {cartItems.map((item) => (
-            <div
-              key={item.id} // Using id instead of courseId
-              className="flex flex-col sm:flex-row items-center justify-between border-b border-gray-200 py-4 last:border-b-0"
-            >
-              {/* Item Image and Details */}
-              <div className="flex items-center flex-grow mb-4 sm:mb-0">
-                {/* Placeholder Image - replace with actual item image if available */}
-                <img
-                  src={item.image || `https://placehold.co/80x80/E0F2F7/000?text=Item`}
-                  alt={item.title || "Cart Item"}
-                  className="w-20 h-20 object-cover rounded-lg mr-4 shadow-sm"
-                  onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/80x80/E0F2F7/000?text=Item`; }}
-                />
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800">{item.title || item.name || 'Unknown Item'}</h3>
-                  <p className="text-sm text-gray-600">Price: ${item.price ? item.price.toFixed(2) : 'N/A'}</p>
-                  <p className="text-xs text-gray-500">ID: {item.id}</p>
-                  {/* Debug: Show item type and more details */}
-                  <p className="text-xs text-gray-500">Type: "{item.type || 'undefined'}"</p>
+          {cartItems.map((item) => {
+            const maxQuantity = getMaxQuantity(item);
+            const currentQuantity = item.quantity || 1;
+            
+            console.log("Rendering item:", {
+              id: item.id,
+              type: item.type,
+              stock: item.stock,
+              maxQuantity,
+              currentQuantity
+            });
+            
+            return (
+              <div
+                key={item.id} // Using id instead of courseId
+                className="flex flex-col sm:flex-row items-center justify-between border-b border-gray-200 py-4 last:border-b-0"
+              >
+                {/* Item Image and Details */}
+                <div className="flex items-center flex-grow mb-4 sm:mb-0">
+                  {/* Placeholder Image - replace with actual item image if available */}
+                  <img
+                    src={item.image || `https://placehold.co/80x80/E0F2F7/000?text=Item`}
+                    alt={item.title || "Cart Item"}
+                    className="w-20 h-20 object-cover rounded-lg mr-4 shadow-sm"
+                    onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/80x80/E0F2F7/000?text=Item`; }}
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800">{item.title || item.name || 'Unknown Item'}</h3>
+                    <p className="text-sm text-gray-600">Price: ${item.price ? item.price.toFixed(2) : 'N/A'}</p>
+                    <p className="text-xs text-gray-500">ID: {item.id}</p>
+                    {/* Show stock information for products */}
+                    {item.type === "product" && item.stock && (
+                      <p className="text-xs text-gray-500">{item.stock} in stock</p>
+                    )}
+                    {/* Debug: Show item type and more details */}
+                    <p className="text-xs text-gray-500">Type: "{item.type || 'undefined'}"</p>
+                  </div>
+                </div>
+
+                {/* Quantity and Actions */}
+                <div className="flex items-center space-x-4">
+                  {/* Debug logging */}
+                  {console.log(`Item ${item.id}: type="${item.type}", comparison result:`, item.type === "product")}
+                  {item.type === "product" ? (
+                    // For products: Show editable quantity with stock validation
+                    <>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-500">Qty:</span>
+                        <label htmlFor={`quantity-${item.id}`} className="sr-only">Quantity</label>
+                        <input
+                          id={`quantity-${item.id}`}
+                          type="number"
+                          min="1"
+                          max={maxQuantity}
+                          value={currentQuantity}
+                          onKeyDown={(e) => {
+                            // Prevent typing if it would exceed max quantity
+                            if (e.key >= '0' && e.key <= '9') {
+                              const currentValue = e.target.value;
+                              const newValue = currentValue + e.key;
+                              if (parseInt(newValue) > maxQuantity) {
+                                e.preventDefault();
+                              }
+                            }
+                          }}
+                          onChange={(e) => {
+                            const inputValue = e.target.value;
+                            console.log("onChange triggered - inputValue:", inputValue, "maxQuantity:", maxQuantity);
+                            
+                            // If empty input, don't update yet
+                            if (inputValue === '') {
+                              console.log("Empty input, returning early");
+                              return;
+                            }
+                            
+                            const newQuantity = parseInt(inputValue);
+                            console.log("Parsed newQuantity:", newQuantity);
+                            
+                            // If invalid number, reset to current quantity
+                            if (isNaN(newQuantity)) {
+                              console.log("Invalid number, resetting to currentQuantity:", currentQuantity);
+                              e.target.value = currentQuantity;
+                              return;
+                            }
+                            
+                            // If exceeds max, set to max
+                            if (newQuantity > maxQuantity) {
+                              console.log("Exceeds max! newQuantity:", newQuantity, "maxQuantity:", maxQuantity);
+                              e.target.value = maxQuantity;
+                              console.log("Setting value to maxQuantity and calling updateItemQuantity");
+                              updateItemQuantity(item.id, maxQuantity);
+                              return;
+                            }
+                            
+                            // If below min, set to min
+                            if (newQuantity < 1) {
+                              console.log("Below min, setting to 1");
+                              e.target.value = 1;
+                              updateItemQuantity(item.id, 1);
+                              return;
+                            }
+                            
+                            // Valid quantity
+                            console.log("Valid quantity, updating to:", newQuantity);
+                            updateItemQuantity(item.id, newQuantity);
+                          }}
+                          onBlur={(e) => {
+                            // Ensure we always have a valid value on blur
+                            const inputValue = e.target.value;
+                            if (inputValue === '' || isNaN(parseInt(inputValue))) {
+                              e.target.value = currentQuantity;
+                            }
+                          }}
+                          className="w-16 p-2 border border-gray-300 rounded-md text-center focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                        />
+                        {/* Stock indicator */}
+                        {item.stock && (
+                          <span className="text-xs text-gray-500">
+                            (max: {maxQuantity})
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => removeItemFromCart(item.id)}
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
+                        aria-label={`Remove ${item.title || 'item'} from cart`}
+                      >
+                        Remove
+                      </button>
+                    </>
+                  ) : (
+                    // For non-products (courses, live-lessons): Fixed quantity of 1
+                    <>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-500">Qty:</span>
+                        <input
+                          type="number"
+                          value="1"
+                          readOnly
+                          className="w-16 p-2 border border-gray-300 rounded-md text-center bg-gray-100 cursor-not-allowed"
+                        />
+                      </div>
+                      <button
+                        onClick={() => removeItemFromCart(item.id)}
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
+                        aria-label={`Remove ${item.title || 'item'} from cart`}
+                      >
+                        Remove
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
-
-              {/* Quantity and Actions */}
-              <div className="flex items-center space-x-4">
-                {/* Debug logging */}
-                {console.log(`Item ${item.id}: type="${item.type}", comparison result:`, item.type === "product")}
-                {item.type === "product" ? (
-                  // For products: Show editable quantity with increment/decrement
-                  <>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-500">Qty:</span>
-                      <label htmlFor={`quantity-${item.id}`} className="sr-only">Quantity</label>
-                      <input
-                        id={`quantity-${item.id}`}
-                        type="number"
-                        min="1"
-                        value={item.quantity || 1}
-                        onChange={(e) => {
-                          const newQuantity = parseInt(e.target.value) || 1;
-                          updateItemQuantity(item.id, Math.max(1, newQuantity));
-                        }}
-                        className="w-16 p-2 border border-gray-300 rounded-md text-center focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                      />
-                    </div>
-                    <button
-                      onClick={() => removeItemFromCart(item.id)}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
-                      aria-label={`Remove ${item.title || 'item'} from cart`}
-                    >
-                      Remove
-                    </button>
-                  </>
-                ) : (
-                  // For non-products (courses, live-lessons): Fixed quantity of 1
-                  <>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-500">Qty:</span>
-                      <input
-                        type="number"
-                        value="1"
-                        readOnly
-                        className="w-16 p-2 border border-gray-300 rounded-md text-center bg-gray-100 cursor-not-allowed"
-                      />
-                    </div>
-                    <button
-                      onClick={() => removeItemFromCart(item.id)}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
-                      aria-label={`Remove ${item.title || 'item'} from cart`}
-                    >
-                      Remove
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Cart Summary */}
