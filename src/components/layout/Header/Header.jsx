@@ -26,6 +26,7 @@ const navItems = [
   { path: '/live-lessons', label: 'Live-lessons' },
   { path: '/about', label: 'About' },
   { path: '/cart', label: '🛒' },
+  {path: '/notification', label: '🔔' },
 ];
 
 const Header = () => {
