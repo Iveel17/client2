@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCart } from '@/hooks/useCart'; // Adjust path as needed
 import Header from '@/components/layout/Header/Header'
+import { Link } from 'react-router-dom';
 
 const CartPage = () => {
   // Destructure cart state and functions from the useCart hook
@@ -166,7 +167,7 @@ const CartPage = () => {
                       </div>
                       <button
                         onClick={() => removeItemFromCart(item.id)}
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200 cursor-pointer"
                         aria-label={`Remove ${item.title || 'item'} from cart`}
                       >
                         Remove
@@ -186,7 +187,7 @@ const CartPage = () => {
                       </div>
                       <button
                         onClick={() => removeItemFromCart(item.id)}
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200"
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-200 cursor-pointer"
                         aria-label={`Remove ${item.title || 'item'} from cart`}
                       >
                         Remove
@@ -214,17 +215,20 @@ const CartPage = () => {
           </div>
           <button
             onClick={clearCart}
-            className="w-full px-6 py-3 mb-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200 text-lg font-semibold"
+            className="w-full px-6 py-3 mb-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200 text-lg font-semibold cursor-pointer"
           >
             Clear Cart
           </button>
-          <button
-            // In a real app, this would navigate to a checkout page
-            onClick={() => console.log("Proceed to Checkout")}
-            className="w-full px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors duration-200 text-lg font-semibold"
-          >
-            Proceed to Checkout
-          </button>
+          <Link to='/checkout'>
+            <button
+              // In a real app, this would navigate to a checkout page
+              onClick={() => console.log("Proceed to Checkout")}
+              className="w-full px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors duration-200 text-lg font-semibold cursor-pointer"
+            >
+              Proceed to Checkout
+            </button>
+          </Link>
+          
         </div>
       </div>
     </div>

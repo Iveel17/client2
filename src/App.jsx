@@ -5,6 +5,7 @@ import ProductsPage from './pages/ProductsPage/ProductsPage'
 import LiveLessonsPage from './pages/LiveLessonsPage/LiveLessonsPage'
 
 import NotificationPage from './pages/NotificationPage'
+import CheckoutPage from './pages/CheckoutPage' // Adjusted path
 import CartPage from './pages/CartPage'
 import AboutPage from './pages/AboutPage'
 import SignupPage from './pages/SignupPage'
@@ -26,6 +27,7 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/notification" element={<NotificationPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
           </Routes>
         </Router>
   )
