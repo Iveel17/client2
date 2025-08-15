@@ -84,6 +84,7 @@ export const CartProvider = ({ children }) => {
       } else {
         const newItem = {
           type: item.type,
+          stock: item.stock,
           id: item.id,
           title: item.title,
           price: item.price,

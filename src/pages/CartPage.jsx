@@ -53,8 +53,8 @@ const CartPage = () => {
     if (item.type === "product") {
       // Since stock is not being passed to cart items, we need to use a fallback
       // This is a temporary fix - the real fix should be in ModalB to pass stock
-      const maxQty = item.stock || 20; // Using 20 as fallback based on your modal image
-      return maxQty;
+      const maxQuantity = item.stock; // Using 20 as fallback based on your modal image
+      return maxQuantity;
     } else {
       return 1; // Non-products (courses, live-lessons) can only have quantity 1
     }
@@ -73,14 +73,6 @@ const CartPage = () => {
             const maxQuantity = getMaxQuantity(item);
             const currentQuantity = item.quantity || 1;
             
-            console.log("Rendering item:", {
-              id: item.id,
-              type: item.type,
-              stock: item.stock,
-              maxQuantity,
-              currentQuantity
-            });
-            
             return (
               <div
                 key={item.id} // Using id instead of courseId
@@ -98,20 +90,15 @@ const CartPage = () => {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800">{item.title || item.name || 'Unknown Item'}</h3>
                     <p className="text-sm text-gray-600">Price: ${item.price ? item.price.toFixed(2) : 'N/A'}</p>
-                    <p className="text-xs text-gray-500">ID: {item.id}</p>
                     {/* Show stock information for products */}
                     {item.type === "product" && item.stock && (
                       <p className="text-xs text-gray-500">{item.stock} in stock</p>
                     )}
-                    {/* Debug: Show item type and more details */}
-                    <p className="text-xs text-gray-500">Type: "{item.type || 'undefined'}"</p>
                   </div>
                 </div>
 
                 {/* Quantity and Actions */}
                 <div className="flex items-center space-x-4">
-                  {/* Debug logging */}
-                  {console.log(`Item ${item.id}: type="${item.type}", comparison result:`, item.type === "product")}
                   {item.type === "product" ? (
                     // For products: Show editable quantity with stock validation
                     <>
@@ -136,43 +123,35 @@ const CartPage = () => {
                           }}
                           onChange={(e) => {
                             const inputValue = e.target.value;
-                            console.log("onChange triggered - inputValue:", inputValue, "maxQuantity:", maxQuantity);
                             
                             // If empty input, don't update yet
                             if (inputValue === '') {
-                              console.log("Empty input, returning early");
                               return;
                             }
                             
                             const newQuantity = parseInt(inputValue);
-                            console.log("Parsed newQuantity:", newQuantity);
                             
                             // If invalid number, reset to current quantity
                             if (isNaN(newQuantity)) {
-                              console.log("Invalid number, resetting to currentQuantity:", currentQuantity);
                               e.target.value = currentQuantity;
                               return;
                             }
                             
                             // If exceeds max, set to max
                             if (newQuantity > maxQuantity) {
-                              console.log("Exceeds max! newQuantity:", newQuantity, "maxQuantity:", maxQuantity);
                               e.target.value = maxQuantity;
-                              console.log("Setting value to maxQuantity and calling updateItemQuantity");
                               updateItemQuantity(item.id, maxQuantity);
                               return;
                             }
                             
                             // If below min, set to min
                             if (newQuantity < 1) {
-                              console.log("Below min, setting to 1");
                               e.target.value = 1;
                               updateItemQuantity(item.id, 1);
                               return;
                             }
                             
                             // Valid quantity
-                            console.log("Valid quantity, updating to:", newQuantity);
                             updateItemQuantity(item.id, newQuantity);
                           }}
                           onBlur={(e) => {
@@ -184,12 +163,6 @@ const CartPage = () => {
                           }}
                           className="w-16 p-2 border border-gray-300 rounded-md text-center focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                         />
-                        {/* Stock indicator */}
-                        {item.stock && (
-                          <span className="text-xs text-gray-500">
-                            (max: {maxQuantity})
-                          </span>
-                        )}
                       </div>
                       <button
                         onClick={() => removeItemFromCart(item.id)}
