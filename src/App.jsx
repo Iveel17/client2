@@ -8,6 +8,7 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 import ErrorBoundary from './pages/ErrorBoundary'
 
 import NotificationPage from './pages/NotificationPage'
+import PlusPage from './pages/PlusPage';
 import CheckoutPage from './pages/CheckoutPage' // Adjusted path
 import CartPage from './pages/CartPage'
 import SignupPage from './pages/SignupPage'
@@ -35,6 +36,7 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/notification" element={<NotificationPage />} />
+            <Route path="/plus" element={<PlusPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
           </Routes>
       </Suspense>

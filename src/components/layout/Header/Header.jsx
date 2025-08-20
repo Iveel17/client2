@@ -27,6 +27,7 @@ const navItems = [
   { path: '/about', label: 'About' },
   { path: '/cart', label: '🛒' },
   {path: '/notification', label: '🔔' },
+  {path: '/plus', label: '➕' },
 ];
 
 const Header = () => {
