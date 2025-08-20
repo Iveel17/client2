@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NotificationToast from '../NotificationToast'; // Adjust path based on your project structure
 import { useCart } from '@/hooks/useCart'; // Adjust path based on your project structure
 
@@ -12,6 +12,13 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
   // State for quantity control
   const [quantity, setQuantity] = useState(1);
 
+  // Reset quantity when modal opens or closes
+  useEffect(() => {
+    if (isOpen) {
+      setQuantity(1); // Reset to 1 when modal opens
+    }
+  }, [isOpen]);
+
   // If modal is not open or no data, render nothing
   if (!isOpen || !itemData) return null;
 
@@ -24,7 +31,7 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
     onActionClick: null,
     imageHeight: 'h-48',
     minQuantity: 1,
-    maxQuantity: itemData.stock || 99,
+    maxQuantity: itemData.stock,
     ...config
   };
 
@@ -44,26 +51,18 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
   const displayTitle = title || name;
   const displayReview = review || reviews || rating;
 
-  // Increment quantity
-  const incrementQuantity = () => {
-    if (quantity < defaultConfig.maxQuantity) {
-      setQuantity(prev => prev + 1);
-    }
-  };
-
-  // Decrement quantity
-  const decrementQuantity = () => {
-    if (quantity > defaultConfig.minQuantity) {
-      setQuantity(prev => prev - 1);
-    }
-  };
-
   // Handle quantity input change
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value) || defaultConfig.minQuantity;
     if (value >= defaultConfig.minQuantity && value <= defaultConfig.maxQuantity) {
       setQuantity(value);
     }
+  };
+
+  // Enhanced close handler to reset quantity
+  const handleClose = () => {
+    setQuantity(1); // Reset quantity to 1
+    onClose();
   };
 
   const handleActionClick = (e) => {
@@ -102,7 +101,7 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
 
     // Close modal after a short delay to let user see the toast
     setTimeout(() => {
-      onClose();
+      handleClose(); // Use the enhanced close handler
     }, 500);
   };
 
@@ -111,7 +110,7 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
       {/* Backdrop with blur effect */}
       <div
         className="fixed inset-0 z-50 flex items-center justify-center p-4"
-        onClick={onClose}
+        onClick={handleClose}
         style={{
           backgroundColor: 'rgba(0, 0, 0, 0.4)',
           backdropFilter: 'blur(8px)',
@@ -129,7 +128,7 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              onClose();
+              handleClose();
             }}
             className="absolute top-4 right-4 z-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all shadow-lg text-xl font-bold"
           >
@@ -204,15 +203,6 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
             <div className="mb-6">
               <h3 className="text-sm font-semibold text-gray-700 mb-3">Quantity</h3>
               <div className="flex items-center gap-3">
-                {/* Decrement Button */}
-                <button
-                  type="button"
-                  onClick={decrementQuantity}
-                  disabled={quantity <= defaultConfig.minQuantity}
-                  className="w-10 h-10 rounded-full border-2 border-purple-200 flex items-center justify-center text-purple-600 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <span className="text-lg font-bold">−</span>
-                </button>
 
                 {/* Quantity Input */}
                 <input
@@ -223,16 +213,6 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
                   max={defaultConfig.maxQuantity}
                   className="w-16 h-10 text-center border-2 border-gray-200 rounded-lg font-semibold text-gray-800 focus:border-purple-400 focus:outline-none"
                 />
-
-                {/* Increment Button */}
-                <button
-                  type="button"
-                  onClick={incrementQuantity}
-                  disabled={quantity >= defaultConfig.maxQuantity}
-                  className="w-10 h-10 rounded-full border-2 border-purple-200 flex items-center justify-center text-purple-600 hover:bg-purple-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <span className="text-lg font-bold">+</span>
-                </button>
 
                 {/* Stock indicator */}
                 {stock && (
