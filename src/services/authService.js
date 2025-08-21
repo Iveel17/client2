@@ -68,6 +68,20 @@ class AuthService {
       return { success: false, error: 'Network error during logout' };
     }
   }
+  async getUserProfile() {
+      try {
+        const response = await fetch(`${this.baseURL}/verify`, {
+          method: 'GET',
+          credentials: 'include'
+        });
+        
+        const data = await response.json();
+        
+        return data.success ? { success: true, user: data.user } : { success: false, user: null };
+      } catch (error) {
+        console.error("[AuthService] Get current user error:", error);
+        return { success: false, user: null };
+      }
+    }
 }
-
 export default new AuthService();
