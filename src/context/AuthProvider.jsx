@@ -12,11 +12,14 @@ export const AuthProvider = ({ children }) => {
         const result = await authService.getUserProfile();
         if (result.success) {
           setUser(result.user);
+          localStorage.setItem('user', JSON.stringify(result.user)); // Persist user
         } else {
           setUser(null);
+          localStorage.removeItem('user');
         }
       } catch {
         setUser(null);
+        localStorage.removeItem('user');
       } finally {
         setLoading(false);
       }
@@ -31,8 +34,8 @@ export const AuthProvider = ({ children }) => {
       
       if (result.success) {
         setUser(result.user); // Set user state if login successful
+        localStorage.setItem('user', JSON.stringify(result.user)); // Persist user
       }
-      
       return result; // IMPORTANT: Return the result so LoginPage can check result.success
     } catch (error) {
       console.error('AuthProvider login error:', error);
@@ -59,10 +62,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const result = await authService.logout();
       setUser(null);
+      localStorage.removeItem('user');
       return result;
     } catch (error) {
       console.error('AuthProvider logout error:', error);
       setUser(null); // Still clear user on logout error
+      localStorage.removeItem('user');
       return { success: false, error: 'Logout failed' };
     }
   };

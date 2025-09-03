@@ -42,6 +42,7 @@ class AuthService {
       });
       
       const data = await response.json();
+      console.log('Login response:', data); // Debug the response
       
       if (!response.ok) {
         return { success: false, errors: data.errors || { general: data.message || 'Login failed' } };
