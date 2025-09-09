@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children, redirectTo = '/login' }) => {
   }
 
   // Check if user is authenticated (not a guest and not null)
-  const isAuthenticated = user && user.role !== 'GUEST';
+  const isAuthenticated = user && user.role !== 'guest';
 
   if (!isAuthenticated) {
     // Redirect to login with return URL
@@ -58,22 +58,23 @@ const RoleBasedRoute = ({
   }
 
   // If user is guest, redirect to login
-  if (user.role === 'GUEST') {
+  if (user.role === 'guest') {
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
 
   // Build array of required roles
   const rolesToCheck = requiredRole ? [requiredRole] : requiredRoles;
   
-  // Role hierarchy: ADMIN > TEACHER > USER > GUEST
+  // Role hierarchy: admin > teacher > user > guest
   const roleHierarchy = {
-    'GUEST': 0,
-    'USER': 1,
-    'TEACHER': 2,
-    'ADMIN': 3
+    'guest': 0,
+    'user': 1,
+    'teacher': 2,
+    'admin': 3
   };
 
-  const userRoleLevel = roleHierarchy[user.role] || 0;
+  const normalizedRole = user.role?.toLowerCase();
+  const userRoleLevel = roleHierarchy[normalizedRole] || 0;
   
   // Check if user has sufficient role level
   const hasRequiredRole = rolesToCheck.some(role => {
@@ -88,7 +89,7 @@ const RoleBasedRoute = ({
     }
     
     // Redirect based on user role
-    if (user.role === 'USER') {
+    if (user.role === 'user') {
       return <Navigate to="/" replace />; // Send users to homepage
     }
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
@@ -113,7 +114,7 @@ const GuestOnlyRoute = ({ children, redirectTo = '/' }) => {
   }
 
   // If user is authenticated (not null and not guest), redirect
-  const isAuthenticated = user && user.role !== 'GUEST';
+  const isAuthenticated = user && user.role !== 'guest';
   
   if (isAuthenticated) {
     return <Navigate to={redirectTo} replace />;
@@ -137,7 +138,7 @@ const ConditionalRoute = ({
     return loadingComponent;
   }
 
-  const isAuthenticated = user && user.role !== 'GUEST';
+  const isAuthenticated = user && user.role !== 'guest';
   
   return isAuthenticated ? authenticatedComponent : guestComponent;
 };

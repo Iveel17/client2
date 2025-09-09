@@ -72,7 +72,7 @@ function App() {
 
             {/* Teacher Routes */}
             <Route path="/plus" element={
-              <RoleBasedRoute requiredRole="TEACHER">
+              <RoleBasedRoute requiredRole="teacher">
                 <PlusPage />
               </RoleBasedRoute>
             } />
