@@ -7,40 +7,47 @@ class ApiService {
   // Main API request method with error handling
   async request(url, options = {}) {
     try {
+      const headers = { ...options.headers};
+
+      if (!(options.body instanceof FormData)) {
+        headers["Content-Type"] = "application/json";
+        if (options.body && typeof options.body !== "string") {
+          options.body = JSON.stringify(options.body);
+        }
+      }
+
       const config = {
-        credentials: 'include', // Include cookies for JWT
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
+        credentials: "include", // Include cookies for JWT
         ...options,
+        headers,
       };
 
       const response = await fetch(url, config);
-      const data = await response.json();
 
-      // Handle unauthorized responses
+      // Try parsing JSON safely
+      const contentType = response.headers.get("content-type");
+      const data = contentType?.includes("application/json")
+        ? await response.json()
+        : await response.text();
+
       if (response.status === 401) {
         this.handleUnauthorized(data);
         return data;
       }
 
-      // Handle forbidden responses  
       if (response.status === 403) {
         this.handleForbidden(data);
         return data;
       }
 
-      // Handle other error responses
       if (!response.ok) {
         this.handleError(response.status, data);
         return data;
       }
 
       return data;
-
     } catch (error) {
-      console.error('API Request Error:', error);
+      console.error("API Request Error:", error);
       this.handleNetworkError(error);
       throw error;
     }
@@ -125,7 +132,7 @@ class ApiService {
     return this.request(url, {
       ...options,
       method: 'POST',
-      body: JSON.stringify(data),
+      body: data,
     });
   }
 
@@ -133,7 +140,7 @@ class ApiService {
     return this.request(url, {
       ...options,
       method: 'PUT',
-      body: JSON.stringify(data),
+      body: data,
     });
   }
 

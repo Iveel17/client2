@@ -5,6 +5,7 @@ import App from './App.jsx';
 
 import { CartProvider } from './context/CartProvider.jsx'; 
 import { AuthProvider } from './context/AuthProvider.jsx'; // Assuming you have an AuthProvider
+import { VideoProvider } from './context/VideoProvider.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/*
@@ -13,9 +14,11 @@ createRoot(document.getElementById('root')).render(
       depend on user authentication status or user ID.
     */}
     <AuthProvider>
-      <CartProvider>
-          <App />
-      </CartProvider>
+      <VideoProvider>
+        <CartProvider>
+            <App />
+        </CartProvider>
+      </VideoProvider>
     </AuthProvider>
   </StrictMode>,
 );

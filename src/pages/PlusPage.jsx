@@ -1,24 +1,16 @@
-import React from 'react';
-import { useAuth } from "@/hooks/useAuth";
+import VideoList from "@/components/VideoList";
+import VideoUpload from "@/components/VideoUpload";
+import { Video } from "lucide-react";
 
-import { Link } from 'react-router-dom';
-import Header from '@/components/layout/Header/Header';
-
-
-const PlusPage = () => {
-  const { user, isAuthenticated, logout } = useAuth();
+function PlusPage() {
   return (
-    <nav>
-      {isAuthenticated ? (
-        <>
-          <span>Hello, {user.firstName}</span>
-          <button onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <a href="/login">Login</a>
-      )}
-    </nav>
+    <div>
+      <VideoList />
+      <VideoUpload />
+
+    </div>
   );
-};
+}
+
 
 export default PlusPage;
