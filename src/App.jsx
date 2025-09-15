@@ -18,7 +18,7 @@ import {
   RoleBasedRoute, 
   GuestOnlyRoute, 
   ConditionalRoute 
-} from '@/components/ProtectedRoute'
+} from '@/components/common/uploads/ProtectedRoute'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
