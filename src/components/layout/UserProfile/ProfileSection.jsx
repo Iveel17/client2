@@ -1,22 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const ProfileSection = ({ user, profilePic, onProfilePicUpload }) => {
+const ProfileSection = ({ user, profilePic, onProfilePicUpload, onUserUpdate }) => {
+  const [firstName, setFirstName] = useState(user.firstName || "");
+  const [lastName, setLastName] = useState(user.lastName || "");
+  const [loading, setLoading] = useState(false);
+
+  // Save both first and last name together
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/users/${user._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ firstName, lastName }),
+      });
+
+      if (!res.ok) throw new Error("Failed to update name");
+
+      const updatedUser = await res.json();
+      console.log("Updated user:", updatedUser);
+
+      // Update local state/UI or notify parent
+      onUserUpdate?.(updatedUser); 
+      setFirstName(updatedUser.firstName);
+      setLastName(updatedUser.lastName);
+    } catch (err) {
+      console.error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium text-gray-900 mb-4">
-          Account
-        </h3>
-        <p className="text-sm text-gray-600 mb-6">
-          Manage your account information
-        </p>
-      </div>
-
       {/* Profile Section */}
       <div className="bg-white border border-gray-200 rounded-lg p-6">
-        <h4 className="text-md font-medium text-gray-900 mb-4">
-          Profile
-        </h4>
+        <h4 className="text-md font-medium text-gray-900 mb-4">Profile</h4>
+
+        {/* Profile Pic */}
         <div className="flex items-center space-x-4 mb-6">
           {profilePic ? (
             <img
@@ -32,14 +55,14 @@ const ProfileSection = ({ user, profilePic, onProfilePicUpload }) => {
           )}
           <div>
             <h5 className="font-medium text-gray-900">
-              {user.firstName} {user.lastName}
+              {firstName} {lastName}
             </h5>
             <p className="text-sm text-gray-500">{user.email}</p>
           </div>
         </div>
 
-        {/* Upload New Profile Picture */}
-        <div>
+        {/* Upload Profile Pic */}
+        <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Upload New Profile Picture
           </label>
@@ -47,38 +70,36 @@ const ProfileSection = ({ user, profilePic, onProfilePicUpload }) => {
             type="file"
             accept="image/*"
             onChange={onProfilePicUpload}
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:cursor-pointer"
           />
         </div>
 
-        {/* Change Name Section */}
+        {/* Change Name */}
         <div className="mt-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Change First Name
+            Change First and Last Name
           </label>
-          <div className="flex gap-2">
+          <div className="flex gap-2 mb-2">
             <input
               type="text"
-              defaultValue={`${user.firstName}`}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="w-1/2 rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
-            <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
-              Save
-            </button>
-          </div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Change Last Name
-          </label>
-          <div className="flex gap-2">
             <input
               type="text"
-              defaultValue={`${user.lastName}`}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="w-1/2 rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
-            <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
-              Save
-            </button>
           </div>
+          <button
+            onClick={handleSave}
+            disabled={loading}
+            className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 disabled:opacity-50 cursor-pointer"
+          >
+            {loading ? "Saving..." : "Save"}
+          </button>
         </div>
       </div>
     </div>

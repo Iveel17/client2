@@ -38,7 +38,7 @@ const AccountModal = forwardRef(({
             <nav className="space-y-1">
               <button
                 onClick={() => setActiveTab("account")}
-                className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer ${
                   activeTab === "account"
                     ? "bg-blue-100 text-blue-700"
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
@@ -48,7 +48,7 @@ const AccountModal = forwardRef(({
               </button>
               <button
                 onClick={() => setActiveTab("security")}
-                className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer ${
                   activeTab === "security"
                     ? "bg-blue-100 text-blue-700"
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
