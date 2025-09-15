@@ -54,12 +54,25 @@ const ProfileSection = ({ user, profilePic, onProfilePicUpload }) => {
         {/* Change Name Section */}
         <div className="mt-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Change Display Name
+            Change First Name
           </label>
           <div className="flex gap-2">
             <input
               type="text"
-              defaultValue={`${user.firstName} ${user.lastName}`}
+              defaultValue={`${user.firstName}`}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            />
+            <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
+              Save
+            </button>
+          </div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Change Last Name
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              defaultValue={`${user.lastName}`}
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
             <button className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
