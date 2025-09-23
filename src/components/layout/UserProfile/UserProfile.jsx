@@ -7,7 +7,6 @@ import ButtonA from "@/components/common/buttons/ButtonA";
 import ProfileButton from './ProfileButton';
 import ProfileDropdown from './ProfileDropDown';
 import AccountModal from './AccountModal';
-import { useProfilePicture } from '@/hooks/useProfilePicture';
 
 const UserProfile = () => {
   const { user, logout } = useAuth();
@@ -17,8 +16,6 @@ const UserProfile = () => {
   const [showAccountModal, setShowAccountModal] = useState(false);
   const modalRef = useRef(null);
   const accountModalRef = useRef(null);
-  
-  const { profilePic, handleProfilePicUpload } = useProfilePicture(user);
 
   const handleLogout = async () => {
     try {
@@ -41,12 +38,6 @@ const UserProfile = () => {
   const onProfilePicUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
-    const result = await handleProfilePicUpload(file);
-    if (!result.success) {
-      // Handle error - you could show a toast notification here
-      console.error("Failed to upload profile picture:", result.error);
-    }
   };
 
   // Close modals when clicking outside
@@ -75,14 +66,12 @@ const UserProfile = () => {
         <div className="relative">
           <ProfileButton 
             user={user}
-            profilePic={profilePic}
             onClick={() => setShowModal(!showModal)}
           />
           
           <ProfileDropdown
             ref={modalRef}
             user={user}
-            profilePic={profilePic}
             isVisible={showModal}
             onManageAccount={handleManageAccount}
             onLogout={handleLogout}
@@ -94,7 +83,6 @@ const UserProfile = () => {
           isVisible={showAccountModal}
           onClose={() => setShowAccountModal(false)}
           user={user}
-          profilePic={profilePic}
           onProfilePicUpload={onProfilePicUpload}
         />
       </>
