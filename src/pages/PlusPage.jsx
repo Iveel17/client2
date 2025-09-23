@@ -1,5 +1,5 @@
-import VideoList from "@/components/common/uploads/VideoList";
-import VideoUpload from "@/components/common/uploads/VideoUpload";
+import VideoList from "@/components/uploads/VideoList";
+import VideoUpload from "@/components/uploads/VideoUpload";
 import Header from "@/components/layout/Header/Header";
 import { Video } from "lucide-react";
 
