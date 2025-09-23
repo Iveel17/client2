@@ -13,6 +13,9 @@ import CartPage from './pages/CartPage'
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 
+import ChooseUpload from './components/uploads/ChooseUpload';
+import VideoUpload from './components/uploads/VideoUpload';
+
 import { 
   ProtectedRoute, 
   RoleBasedRoute, 
@@ -30,6 +33,8 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/choose-upload" element={<ChooseUpload />} />
+            <Route path="/course-upload" element={<VideoUpload />} />
 
             {/* Guest-Only Routes - Only for unauthenticated users */}
             <Route path="/login" element={
