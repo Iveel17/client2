@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { PictureContext } from "../context/pictureContext.js";
+import { PictureContext } from "../context/picture/pictureContext.js";
 
 /**
  * Custom hook to access picture context

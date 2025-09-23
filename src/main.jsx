@@ -3,10 +3,10 @@ import { createRoot } from 'react-dom/client';
 import './index.css'; // Your global styles
 import App from './App.jsx';
 
-import { CartProvider } from './context/CartProvider.jsx'; 
-import { AuthProvider } from './context/AuthProvider.jsx'; // Assuming you have an AuthProvider
-import { VideoProvider } from './context/VideoProvider.jsx';
-import { PictureProvider } from './context/pictureProvider.jsx';
+import { CartProvider } from './context/cart/CartProvider.jsx'; 
+import { AuthProvider } from './context/auth/AuthProvider.jsx'; // Assuming you have an AuthProvider
+import { VideoProvider } from './context/video/VideoProvider.jsx';
+import { PictureProvider } from './context/picture/pictureProvider.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/*
