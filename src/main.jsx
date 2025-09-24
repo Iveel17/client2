@@ -6,6 +6,7 @@ import App from './App.jsx';
 import { CartProvider } from './context/cart/CartProvider.jsx'; 
 import { AuthProvider } from './context/auth/AuthProvider.jsx'; // Assuming you have an AuthProvider
 import { VideoProvider } from './context/video/VideoProvider.jsx';
+import { CourseCardProvider } from './context/courseCard/courseCardProvider.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/*
@@ -16,7 +17,9 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <VideoProvider>
           <CartProvider>
+            <CourseCardProvider>
               <App />
+            </CourseCardProvider>
           </CartProvider>
       </VideoProvider>
     </AuthProvider>
