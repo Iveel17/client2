@@ -12,10 +12,6 @@ class CourseCardService {
       withCredentials: true,
     });
   }
-
-    async getCourseCards() {  
-    return apiService.get(`${this.baseURL}`);
-    }
 }
 
 export default new CourseCardService();

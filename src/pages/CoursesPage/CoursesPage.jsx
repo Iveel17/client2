@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Card from '@/components/common/Card';
 import Header from '@/components/layout/Header/Header';
 import ModalA from '@/components/common/modals/ModalA';
 import FilterModal from '@/components/common/modals/FilterModal';
 import ButtonA from '@/components/common/buttons/ButtonA';
 
-import coursesData from '@/data/courses.json'; // Adjust path as needed
-
+// Removed: import coursesData from '@/data/courses.json'; 
+const API_URL = 'http://localhost:5000/api/courses';
 const CoursesPage = () => {
+  // State for raw data fetched from the API
+  const [courses, setCourses] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+
+  // State for UI and filtering
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -16,80 +22,15 @@ const CoursesPage = () => {
     category: [],
     level: [],
   });
-  const [displayedCourses, setDisplayedCourses] = useState(coursesData);
+  const [displayedCourses, setDisplayedCourses] = useState([]); 
 
-  // Card configuration for courses - Made more flexible
-  const courseCardConfig = {
-    showId: true,
-    showTitle: true,
-    showImage: true,
-    showPrice: true,
-    showStatus: true,
-    pricePrefix: '$',
-    imageHeight: 'h-48',
-    // Ensure cards have consistent height
-    cardHeight: 'min-h-[400px]',
-    // Add some responsive classes
-    className: 'flex flex-col h-full'
-  };
-
-  // Enhanced modal configuration for courses
-  const enrollModalConfig = {
-    title: 'Course Details',
-    actionButtonText: 'Add to Cart',
-    actionButtonColor: 'green',
-    showImage: true,
-    showDescription: true,
-    showPrice: true,
-    pricePrefix: '$',
-    imageHeight: 'h-56'
-  };
-
-  // Filter modal configuration for courses
-  const filterModalConfig = {
-    title: 'COURSE FILTERS',
-    sortOptions: [
-      { value: 'bestSelling', label: 'Best Selling' },
-      { value: 'priceLowest', label: 'Price (Lowest First)' },
-      { value: 'priceHighest', label: 'Price (Highest First)' },
-      { value: 'newArrivals', label: 'New Arrivals' },
-      { value: 'highestRated', label: 'Highest Rated' }
-    ],
-    categories: ['Programming', 'Marketing', 'Data Science', 'Design'],
-    levels: ['Beginner', 'Intermediate', 'Advanced'],
-    showSort: true,
-    showCategory: true,
-    showLevel: true,
-    showBrands: false,
-    showPriceRange: false,
-    showRating: false,
-    buttonText: 'VIEW {count} COURSES',
-    sortLabel: 'SORT BY:',
-    categoryLabel: 'CATEGORY',
-    levelLabel: 'LEVEL'
-  };
-
-  const toggleFilterModal = () => {
-    setIsFilterModalOpen(!isFilterModalOpen);
-  };
-
-  const handleEnrollClick = (course) => {
-    setSelectedCourse(course);
-    setIsEnrollModalOpen(true);
-  };
-
-  const closeEnrollModal = () => {
-    setIsEnrollModalOpen(false);
-    setSelectedCourse(null);
-  };
-
-  const handleFiltersChange = (newFilters) => {
-    setFilters(newFilters);
-    applyFilters(newFilters);
-  };
-
-  const applyFilters = (currentFilters) => {
-    let filtered = [...coursesData];
+  // =========================================================================
+  // 1. STABLE FILTER FUNCTION (useCallback)
+  // =========================================================================
+  // Function to apply filters/sorting, made stable with useCallback
+  const applyFilters = useCallback((currentFilters) => {
+    // Use the raw fetched data as the source of truth
+    let filtered = [...courses]; 
 
     // Apply category filter
     if (currentFilters.category && currentFilters.category.length > 0) {
@@ -114,88 +55,198 @@ const CoursesPage = () => {
         filtered.sort((a, b) => b.price - a.price);
         break;
       case 'newArrivals':
-        filtered.sort(() => Math.random() - 0.5);
+        // Sort by uploadedAt field from MongoDB
+        filtered.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
         break;
       case 'highestRated':
-        filtered.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+        // Assuming your course data has a 'rating' field
+        filtered.sort((a, b) => parseFloat(b.rating || 0) - parseFloat(a.rating || 0));
         break;
       case 'bestSelling':
       default:
-        filtered.sort((a, b) => b.students - a.students);
+        // Assuming your course data has a 'students' or 'sales' field
+        filtered.sort((a, b) => (b.students || 0) - (a.students || 0));
         break;
     }
     
     setDisplayedCourses(filtered);
+  }, [courses]); // Dependency: Recreate this function only when the raw 'courses' data changes
+
+  // =========================================================================
+  // 2. EFFECT HOOK TO FETCH DATA (Runs once on mount)
+  // =========================================================================
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(API_URL); 
+        
+        if (!response.ok) {
+          throw new Error(`Server returned status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Store raw data and initialize displayed data
+        setCourses(data); 
+        // setDisplayedCourses(data); // Initial filtering is now handled by the next useEffect
+        setError(null);
+
+      } catch (err) {
+        console.error("Failed to fetch courses:", err);
+        setError("Failed to load courses. Please check the server connection.");
+        setCourses([]); 
+        setDisplayedCourses([]);
+      } finally {
+        setLoading(false); 
+      }
+    };
+
+    fetchCourses();
+  }, []); // Runs once on mount
+
+  // =========================================================================
+  // 3. EFFECT HOOK TO APPLY FILTERS (Runs on data or filter change)
+  // =========================================================================
+  useEffect(() => {
+    if (!loading && !error && courses.length > 0) {
+      applyFilters(filters);
+    }
+  // Dependencies included: applyFilters (stable function), and filters (state object)
+  }, [applyFilters, filters, loading, error, courses]);
+  
+  // =========================================================================
+  // 4. HANDLERS AND CONFIGS (Rest of the component logic)
+  // =========================================================================
+
+  const toggleFilterModal = () => {
+    setIsFilterModalOpen(!isFilterModalOpen);
+  };
+
+  const handleEnrollClick = (course) => {
+    setSelectedCourse(course);
+    setIsEnrollModalOpen(true);
+  };
+
+  const closeEnrollModal = () => {
+    setIsEnrollModalOpen(false);
+    setSelectedCourse(null);
+  };
+
+  const handleFiltersChange = (newFilters) => {
+    setFilters(newFilters);
   };
 
   const handleApplyFilters = () => {
-    applyFilters(filters);
+    // applyFilters(filters); // applyFilters is already run by the useEffect above
     toggleFilterModal();
   };
 
   const handleCardClick = (courseId) => {
     console.log(`Navigating to course details for ID: ${courseId}`);
-    // In a real app, you'd use React Router:
     // navigate(`/courses/${courseId}`);
+  };
+  
+  // Card configuration 
+  const courseCardConfig = {
+    showId: true, showTitle: true, showImage: true, showPrice: true, 
+    showStatus: true, pricePrefix: '$', imageHeight: 'h-48',
+    cardHeight: 'min-h-[400px]', className: 'flex flex-col h-full'
+  };
+
+  // Enhanced modal configuration
+  const enrollModalConfig = {
+    title: 'Course Details', actionButtonText: 'Add to Cart', actionButtonColor: 'green',
+    showImage: true, showDescription: true, showPrice: true, pricePrefix: '$', imageHeight: 'h-56'
+  };
+
+  // Filter modal configuration
+  const filterModalConfig = {
+    title: 'COURSE FILTERS',
+    sortOptions: [
+      { value: 'bestSelling', label: 'Best Selling' },
+      { value: 'priceLowest', label: 'Price (Lowest First)' },
+      { value: 'priceHighest', label: 'Price (Highest First)' },
+      { value: 'newArrivals', label: 'New Arrivals' },
+      { value: 'highestRated', label: 'Highest Rated' }
+    ],
+    categories: ['Programming', 'Marketing', 'Data Science', 'Design'],
+    levels: ['Beginner', 'Intermediate', 'Advanced'],
+    showSort: true, showCategory: true, showLevel: true, showBrands: false,
+    showPriceRange: false, showRating: false, buttonText: 'VIEW {count} COURSES',
+    sortLabel: 'SORT BY:', categoryLabel: 'CATEGORY', levelLabel: 'LEVEL'
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
 
-      {/* Main content - Remove blur effect from here since modal handles backdrop */}
       <main className="flex-grow">
         <h1 className="text-center text-2xl md:text-4xl font-extrabold text-gray-800 my-6 md:my-10 uppercase px-4">
           ALL COURSES
         </h1>
 
         <div className="container mx-auto px-4 pb-10">
-          {/* Header with responsive text */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <div className="text-xl md:text-2xl font-bold text-gray-700">
-              {displayedCourses.length} COURSES
+              {loading ? 'LOADING...' : `${displayedCourses.length} COURSES`}
             </div>
-            <ButtonA onClick={toggleFilterModal} text="FILTER/SORT+" />
+            <ButtonA onClick={toggleFilterModal} text="FILTER/SORT+" disabled={loading || error} />
           </div>
+          
+          {/* RENDER LOADING AND ERROR STATES */}
+          {loading && (
+            <div className="text-center py-16 text-gray-600 text-lg">
+              <svg className="animate-spin h-5 w-5 mr-3 inline-block" viewBox="0 0 24 24"></svg>
+              Loading courses from database...
+            </div>
+          )}
 
-          {/* Responsive grid with better breakpoints */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-            {displayedCourses.map((course) => (
-              <div key={course.id} className="h-full">
-                <Card 
-                  data={course} 
-                  config={courseCardConfig}
-                  onClick={() => handleCardClick(course.id)}
-                  className="h-full flex flex-col"
-                >
-                  {/* Always show enroll button - positioned at bottom */}
-                  <div className="mt-auto pt-4">
-                    <ButtonA 
-                      text='Enroll' 
-                      className='w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors'
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleEnrollClick(course);
-                      }}
-                    />
-                  </div>
-                </Card>
-              </div>
-            ))}
-          </div>
+          {error && (
+            <div className="text-center py-16 text-red-600 text-lg">
+              ❌ Error: {error}
+            </div>
+          )}
+          
+          {/* RENDER COURSE GRID */}
+          {!loading && !error && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+              {displayedCourses.map((course) => (
+                // Use MongoDB's _id as the unique key
+                <div key={course._id} className="h-full"> 
+                  <Card 
+                    data={course} 
+                    config={courseCardConfig}
+                    onClick={() => handleCardClick(course._id)}
+                    className="h-full flex flex-col"
+                  >
+                    <div className="mt-auto pt-4">
+                      <ButtonA 
+                        text='Enroll' 
+                        className='w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors'
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleEnrollClick(course);
+                        }}
+                      />
+                    </div>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* No results message */}
-          {displayedCourses.length === 0 && (
+          {displayedCourses.length === 0 && !loading && !error && (
             <div className="text-center py-16">
-              <div className="text-gray-500 text-xl mb-4">No courses found</div>
+              <div className="text-gray-500 text-xl mb-4">No courses found matching your criteria.</div>
               <div className="text-gray-400">Try adjusting your filters</div>
             </div>
           )}
         </div>
       </main>
 
-      {/* Enroll Modal with custom config */}
+      {/* Enroll Modal */}
       <ModalA 
         isOpen={isEnrollModalOpen}
         onClose={closeEnrollModal}
