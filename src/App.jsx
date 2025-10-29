@@ -17,6 +17,7 @@ import VideoUpload from './components/uploads/VideoUpload';
 
 import CourseCardUpload from './components/uploads/courseCardUpload';
 import LiveLessonCardUpload from './components/uploads/LiveLessonCardUpload';
+import ProductCardUpload from './components/uploads/ProductCardUpload';
 
 import { 
   ProtectedRoute, 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/course-upload" element={<CourseCardUpload />} />
             <Route path="/live-lesson-upload" element={<LiveLessonCardUpload />} />
+            <Route path="/product-upload" element={<ProductCardUpload />} />
 
             {/* Guest-Only Routes - Only for unauthenticated users */}
             <Route path="/login" element={
