@@ -16,6 +16,7 @@ import LoginPage from './pages/LoginPage'
 import VideoUpload from './components/uploads/VideoUpload';
 
 import CourseCardUpload from './components/uploads/courseCardUpload';
+import LiveLessonCardUpload from './components/uploads/LiveLessonCardUpload';
 
 import { 
   ProtectedRoute, 
@@ -35,6 +36,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/course-upload" element={<CourseCardUpload />} />
+            <Route path="/live-lesson-upload" element={<LiveLessonCardUpload />} />
 
             {/* Guest-Only Routes - Only for unauthenticated users */}
             <Route path="/login" element={
