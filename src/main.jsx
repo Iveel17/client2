@@ -8,6 +8,8 @@ import { AuthProvider } from './context/auth/AuthProvider.jsx'; // Assuming you 
 import { VideoProvider } from './context/video/VideoProvider.jsx';
 import { CourseCardProvider } from './context/courseCard/courseCardProvider.jsx';
 import { LiveLessonCardProvider } from './context/liveLessonCard/liveLessonCardProvider.jsx';
+import { ProductCardProvider } from './context/productCard/productCardProvider.jsx';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/*
@@ -20,7 +22,9 @@ createRoot(document.getElementById('root')).render(
           <CartProvider>
             <CourseCardProvider>
               <LiveLessonCardProvider>
-                <App />
+                <ProductCardProvider>
+                  <App />
+                </ProductCardProvider>
               </LiveLessonCardProvider>
             </CourseCardProvider>
           </CartProvider>
