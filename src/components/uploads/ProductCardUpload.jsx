@@ -141,7 +141,7 @@ const ProductCardUpload = () => {
         <input
           type="number"
           name="stock"
-          placeholder="Maximum Capacity"
+          placeholder="Stock"
           value={productCardData.stock}
           onChange={(e) => handleInputChange("stock", e.target.value)}
           min="1"
