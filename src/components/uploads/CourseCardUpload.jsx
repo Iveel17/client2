@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useCourseCard } from "@/hooks/useCourseCard"; // Replace with actual course card hook
+import { useCourseActions } from "@/hooks/useCourseActions"; // Replace with actual course card hook
 import Header from "../layout/Header/Header";
 
-const CourseCardUpload = () => {
-  const { createCourseCard } = useCourseCard(); // Replace with actual course card hook
-  const [courseCardData, setCourseCardData] = useState({
+const CourseActionsUpload = () => {
+  const { createCourseActions } = useCourseActions(); // Replace with actual course card hook
+  const [courseActionsData, setCourseActionsData] = useState({
     id: "",
     type: "course",
     title: "",
@@ -21,7 +21,7 @@ const CourseCardUpload = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const handleInputChange = (field, value) => {
-    setCourseCardData(prev => ({
+    setCourseActionsData(prev => ({
       ...prev,
       [field]: value
     }));
@@ -33,18 +33,18 @@ const CourseCardUpload = () => {
     const formData = new FormData();
     
     // Append all course card data
-    Object.keys(courseCardData).forEach(key => {
-      if (courseCardData[key] !== "" && courseCardData[key] !== null) {
-        formData.append(key, courseCardData[key]);
+    Object.keys(courseActionsData).forEach(key => {
+      if (courseActionsData[key] !== "" && courseActionsData[key] !== null) {
+        formData.append(key, courseActionsData[key]);
       }
     });
     
     if (imageFile) formData.append("image", imageFile);
     
     try {
-      await createCourseCard(formData);
+      await createCourseActions(formData);
       // Reset form
-      setCourseCardData({
+      setCourseActionsData({
         id: "",
         type: "course",
         title: "",
@@ -74,7 +74,7 @@ const CourseCardUpload = () => {
           type="text"
           name="id"
           placeholder="Course ID (e.g., C004)"
-          value={courseCardData.id}
+          value={courseActionsData.id}
           onChange={(e) => handleInputChange("id", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
@@ -84,7 +84,7 @@ const CourseCardUpload = () => {
           type="text"
           name="title"
           placeholder="Course Title"
-          value={courseCardData.title}
+          value={courseActionsData.title}
           onChange={(e) => handleInputChange("title", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
@@ -109,7 +109,7 @@ const CourseCardUpload = () => {
           type="number"
           name="price"
           placeholder="Price ($)"
-          value={courseCardData.price}
+          value={courseActionsData.price}
           onChange={(e) => handleInputChange("price", e.target.value)}
           step="0.01"
           min="0"
@@ -120,7 +120,7 @@ const CourseCardUpload = () => {
         <textarea
           name="description"
           placeholder="Course Description"
-          value={courseCardData.description}
+          value={courseActionsData.description}
           onChange={(e) => handleInputChange("description", e.target.value)}
           required
           rows="4"
@@ -129,7 +129,7 @@ const CourseCardUpload = () => {
         
         <select
           name="category"
-          value={courseCardData.category}
+          value={courseActionsData.category}
           onChange={(e) => handleInputChange("category", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white"
@@ -146,7 +146,7 @@ const CourseCardUpload = () => {
 
         <select
           name="level"
-          value={courseCardData.level}
+          value={courseActionsData.level}
           onChange={(e) => handleInputChange("level", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white"
@@ -162,7 +162,7 @@ const CourseCardUpload = () => {
           type="number"
           name="duration"
           placeholder="Duration (in hours)"
-          value={courseCardData.duration}
+          value={courseActionsData.duration}
           onChange={(e) => handleInputChange("duration", e.target.value)}
           min="1"
           required
@@ -173,7 +173,7 @@ const CourseCardUpload = () => {
           type="number"
           name="lessons"
           placeholder="Number of Lessons"
-          value={courseCardData.lessons}
+          value={courseActionsData.lessons}
           onChange={(e) => handleInputChange("lessons", e.target.value)}
           min="1"
           required
@@ -184,7 +184,7 @@ const CourseCardUpload = () => {
           type="number"
           name="capacity"
           placeholder="Maximum Capacity"
-          value={courseCardData.capacity}
+          value={courseActionsData.capacity}
           onChange={(e) => handleInputChange("capacity", e.target.value)}
           min="1"
           required
@@ -195,7 +195,7 @@ const CourseCardUpload = () => {
           type="text"
           name="instructor"
           placeholder="Instructor ID (optional)"
-          value={courseCardData.instructor}
+          value={courseActionsData.instructor}
           onChange={(e) => handleInputChange("instructor", e.target.value)}
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
         />
@@ -213,4 +213,4 @@ const CourseCardUpload = () => {
   );
 };
 
-export default CourseCardUpload;
+export default CourseActionsUpload;

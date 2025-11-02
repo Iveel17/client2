@@ -43,6 +43,12 @@ const ProfileDropdown = forwardRef(({
       {/* Menu Items */}
       <div className="py-1">
         <button
+          onClick={onManageAccount} /* change to actual my courses handler*/
+          className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 cursor-pointer"
+        >
+          My courses
+        </button>
+        <button
           onClick={onManageAccount}
           className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2 cursor-pointer"
         >
