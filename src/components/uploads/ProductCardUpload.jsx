@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useProductCard } from "@/hooks/useProductCard"; // Replace with actual product card hook
+import { useProductActions } from "@/hooks/useProductActions"; // Replace with actual product card hook
 import Header from "../layout/Header/Header";
 
-const ProductCardUpload = () => {
-  const { createProductCard } = useProductCard(); // Replace with actual product card hook
-  const [productCardData, setProductCardData] = useState({
+const ProductActionsUpload = () => {
+  const { createProductActions } = useProductActions(); // Replace with actual product card hook
+  const [productActionsData, setProductActionsData] = useState({
     id: "",
     type: "product",
     title: "",
@@ -18,7 +18,7 @@ const ProductCardUpload = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const handleInputChange = (field, value) => {
-    setProductCardData(prev => ({
+    setProductActionsData(prev => ({
       ...prev,
       [field]: value
     }));
@@ -30,18 +30,18 @@ const ProductCardUpload = () => {
     const formData = new FormData();
     
     // Append all product card data
-    Object.keys(productCardData).forEach(key => {
-      if (productCardData[key] !== "" && productCardData[key] !== null) {
-        formData.append(key, productCardData[key]);
+    Object.keys(productActionsData).forEach(key => {
+      if (productActionsData[key] !== "" && productActionsData[key] !== null) {
+        formData.append(key, productActionsData[key]);
       }
     });
     
     if (imageFile) formData.append("image", imageFile);
     
     try {
-      await createProductCard(formData);
+      await createProductActions(formData);
       // Reset form
-      setProductCardData({
+      setProductActionsData({
         id: "",
         type: "product",
         title: "",
@@ -68,7 +68,7 @@ const ProductCardUpload = () => {
           type="text"
           name="id"
           placeholder="Product ID (e.g., C004)"
-          value={productCardData.id}
+          value={productActionsData.id}
           onChange={(e) => handleInputChange("id", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
@@ -78,7 +78,7 @@ const ProductCardUpload = () => {
           type="text"
           name="title"
           placeholder="Product Title"
-          value={productCardData.title}
+          value={productActionsData.title}
           onChange={(e) => handleInputChange("title", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
@@ -103,7 +103,7 @@ const ProductCardUpload = () => {
           type="number"
           name="price"
           placeholder="Price ($)"
-          value={productCardData.price}
+          value={productActionsData.price}
           onChange={(e) => handleInputChange("price", e.target.value)}
           step="0.01"
           min="0"
@@ -114,7 +114,7 @@ const ProductCardUpload = () => {
         <textarea
           name="description"
           placeholder="Product Description"
-          value={productCardData.description}
+          value={productActionsData.description}
           onChange={(e) => handleInputChange("description", e.target.value)}
           required
           rows="4"
@@ -123,7 +123,7 @@ const ProductCardUpload = () => {
         
         <select
           name="category"
-          value={productCardData.category}
+          value={productActionsData.category}
           onChange={(e) => handleInputChange("category", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white"
@@ -142,7 +142,7 @@ const ProductCardUpload = () => {
           type="number"
           name="stock"
           placeholder="Stock"
-          value={productCardData.stock}
+          value={productActionsData.stock}
           onChange={(e) => handleInputChange("stock", e.target.value)}
           min="1"
           required
@@ -153,7 +153,7 @@ const ProductCardUpload = () => {
           type="number"
           name="discount"
           placeholder="Discount (%), default 0"
-          value={productCardData.discount}
+          value={productActionsData.discount}
           default="0"
           onChange={(e) => handleInputChange("discount", e.target.value)}
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
@@ -172,4 +172,4 @@ const ProductCardUpload = () => {
   );
 };
 
-export default ProductCardUpload;
+export default ProductActionsUpload;

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useLiveLessonCard } from "@/hooks/useLiveLessonCard"; // Replace with actual live lesson card hook
+import { useLiveLessonActions } from "@/hooks/useLiveLessonActions"; // Replace with actual live lesson card hook
 import Header from "../layout/Header/Header";
 
-const LiveLessonCardUpload = () => {
-  const { createLiveLessonCard } = useLiveLessonCard(); // Replace with actual live lesson card hook
-  const [liveLessonCardData, setLiveLessonCardData] = useState({
+const LiveLessonActionsUpload = () => {
+  const { createLiveLessonActions } = useLiveLessonActions(); // Replace with actual live lesson card hook
+  const [liveLessonActionsData, setLiveLessonActionsData] = useState({
     id: "",
     type: "live-lesson",
     title: "",
@@ -21,7 +21,7 @@ const LiveLessonCardUpload = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const handleInputChange = (field, value) => {
-    setLiveLessonCardData(prev => ({
+    setLiveLessonActionsData(prev => ({
       ...prev,
       [field]: value
     }));
@@ -33,18 +33,18 @@ const LiveLessonCardUpload = () => {
     const formData = new FormData();
     
     // Append all live lesson card data
-    Object.keys(liveLessonCardData).forEach(key => {
-      if (liveLessonCardData[key] !== "" && liveLessonCardData[key] !== null) {
-        formData.append(key, liveLessonCardData[key]);
+    Object.keys(liveLessonActionsData).forEach(key => {
+      if (liveLessonActionsData[key] !== "" && liveLessonActionsData[key] !== null) {
+        formData.append(key, liveLessonActionsData[key]);
       }
     });
     
     if (imageFile) formData.append("image", imageFile);
     
     try {
-      await createLiveLessonCard(formData);
+      await createLiveLessonActions(formData);
       // Reset form
-      setLiveLessonCardData({
+      setLiveLessonActionsData({
         id: "",
         type: "live-lesson",
         title: "",
@@ -74,7 +74,7 @@ const LiveLessonCardUpload = () => {
           type="text"
           name="id"
           placeholder="Live Lesson ID (e.g., C004)"
-          value={liveLessonCardData.id}
+          value={liveLessonActionsData.id}
           onChange={(e) => handleInputChange("id", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
@@ -84,7 +84,7 @@ const LiveLessonCardUpload = () => {
           type="text"
           name="title"
           placeholder="Live Lesson Title"
-          value={liveLessonCardData.title}
+          value={liveLessonActionsData.title}
           onChange={(e) => handleInputChange("title", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
@@ -109,7 +109,7 @@ const LiveLessonCardUpload = () => {
           type="number"
           name="price"
           placeholder="Price ($)"
-          value={liveLessonCardData.price}
+          value={liveLessonActionsData.price}
           onChange={(e) => handleInputChange("price", e.target.value)}
           step="0.01"
           min="0"
@@ -120,7 +120,7 @@ const LiveLessonCardUpload = () => {
         <textarea
           name="description"
           placeholder="Live Lesson Description"
-          value={liveLessonCardData.description}
+          value={liveLessonActionsData.description}
           onChange={(e) => handleInputChange("description", e.target.value)}
           required
           rows="4"
@@ -129,7 +129,7 @@ const LiveLessonCardUpload = () => {
         
         <select
           name="category"
-          value={liveLessonCardData.category}
+          value={liveLessonActionsData.category}
           onChange={(e) => handleInputChange("category", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white"
@@ -146,7 +146,7 @@ const LiveLessonCardUpload = () => {
 
         <select
           name="level"
-          value={liveLessonCardData.level}
+          value={liveLessonActionsData.level}
           onChange={(e) => handleInputChange("level", e.target.value)}
           required
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white"
@@ -162,7 +162,7 @@ const LiveLessonCardUpload = () => {
           type="number"
           name="duration"
           placeholder="Duration (in hours)"
-          value={liveLessonCardData.duration}
+          value={liveLessonActionsData.duration}
           onChange={(e) => handleInputChange("duration", e.target.value)}
           min="1"
           required
@@ -173,7 +173,7 @@ const LiveLessonCardUpload = () => {
           type="number"
           name="lessons"
           placeholder="Number of Lessons"
-          value={liveLessonCardData.lessons}
+          value={liveLessonActionsData.lessons}
           onChange={(e) => handleInputChange("lessons", e.target.value)}
           min="1"
           required
@@ -184,7 +184,7 @@ const LiveLessonCardUpload = () => {
           type="number"
           name="capacity"
           placeholder="Maximum Capacity"
-          value={liveLessonCardData.capacity}
+          value={liveLessonActionsData.capacity}
           onChange={(e) => handleInputChange("capacity", e.target.value)}
           min="1"
           required
@@ -195,7 +195,7 @@ const LiveLessonCardUpload = () => {
           type="text"
           name="instructor"
           placeholder="Instructor ID (optional)"
-          value={liveLessonCardData.instructor}
+          value={liveLessonActionsData.instructor}
           onChange={(e) => handleInputChange("instructor", e.target.value)}
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none"
         />
@@ -213,4 +213,4 @@ const LiveLessonCardUpload = () => {
   );
 };
 
-export default LiveLessonCardUpload;
+export default LiveLessonActionsUpload;
