@@ -135,12 +135,8 @@ const LiveLessonActionsUpload = () => {
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white"
         >
           <option value="">Select Category</option>
-          <option value="Data Science">Data Science</option>
-          <option value="Programming">Programming</option>
-          <option value="Design">Design</option>
-          <option value="Business">Business</option>
-          <option value="Marketing">Marketing</option>
-          <option value="Development">Development</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="English">English</option>
           <option value="Other">Other</option>
         </select>
 
@@ -155,7 +151,6 @@ const LiveLessonActionsUpload = () => {
           <option value="Beginner">Beginner</option>
           <option value="Intermediate">Intermediate</option>
           <option value="Advanced">Advanced</option>
-          <option value="Expert">Expert</option>
         </select>
 
         <input

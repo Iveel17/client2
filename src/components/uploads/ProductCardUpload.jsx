@@ -129,12 +129,9 @@ const ProductActionsUpload = () => {
           className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white"
         >
           <option value="">Select Category</option>
-          <option value="Data Science">Data Science</option>
-          <option value="Programming">Programming</option>
-          <option value="Design">Design</option>
-          <option value="Business">Business</option>
-          <option value="Marketing">Marketing</option>
-          <option value="Development">Development</option>
+          <option value="Cards">Cards</option>
+          <option value="Books">Books</option>
+          <option value="Toys">Toys</option>
           <option value="Other">Other</option>
         </select>
 
