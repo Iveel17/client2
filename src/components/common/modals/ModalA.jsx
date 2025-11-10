@@ -154,10 +154,8 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="text-white text-6xl">
-                    {category === 'Programming' ? '⚛️' :
-                     category === 'Design' ? '🎨' :
-                     category === 'Marketing' ? '📈' :
-                     category === 'Data Science' ? '📊' : '📚'}
+                    {category === 'Mathematics' ? '⚛️' :
+                     category === 'English' ? '🔠' : '📚'}
                   </div>
                 </div>
               )}

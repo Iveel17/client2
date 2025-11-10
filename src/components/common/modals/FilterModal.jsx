@@ -22,7 +22,7 @@ const FilterModal = ({
       { value: 'newArrivals', label: 'New Arrivals' },
       { value: 'highestRated', label: 'Highest Rated' }
     ],
-    categories: ['Programming', 'Marketing', 'Data Science', 'Design'],
+    categories: ['Mathematics', 'English'],
     levels: ['Beginner', 'Intermediate', 'Advanced'],
     showSort: true,
     showCategory: true,

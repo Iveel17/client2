@@ -182,7 +182,7 @@ const ProductsPage = () => {
       { value: 'highestDiscount', label: 'Highest Discount' },
       { value: 'inStock', label: 'Most in Stock' }
     ],
-    categories: ['Data Science', 'Programming', 'Design', 'Business', 'Marketing', 'Development', 'Other'],
+    categories: ['Mathematics','English', 'Other'],
     showSort: true,
     showCategory: true,
     showLevel: false, // Products don't have levels
