@@ -167,7 +167,8 @@ const ProductsPage = () => {
     showDescription: true,
     showPrice: true,
     pricePrefix: '$',
-    imageHeight: 'h-56'
+    imageHeight: 'h-56',
+    imagePath: 'product-modals/covers'  // 👈 ADD THIS LINE
   };
 
   // Filter modal configuration
