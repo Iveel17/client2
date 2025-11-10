@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 import NotificationToast from '../NotificationToast'; // Adjust path based on your project structure
 import { useCart } from '@/hooks/useCart'; // Adjust path based on your project structure
 
@@ -32,6 +33,7 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
     imageHeight: 'h-48',
     minQuantity: 1,
     maxQuantity: itemData.stock,
+    imagePath: 'product-cards/covers', // 👈 ADD THIS
     ...config
   };
 
@@ -140,8 +142,8 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
             <div className={`relative ${defaultConfig.imageHeight} bg-gradient-to-br from-purple-800 to-blue-900 rounded-t-xl overflow-hidden`}>
               {image ? (
                 <img
-                  src={image}
-                  alt={displayTitle}
+                  src={`${API_BASE}/${defaultConfig.imagePath}/${image}`}  // 👈 CHANGE THIS
+                  alt={title}
                   className="w-full h-full object-cover"
                 />
               ) : (

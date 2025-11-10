@@ -25,6 +25,7 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
     actionButtonColor: 'blue',
     onActionClick: null,
     imageHeight: 'h-48',
+    imagePath: 'course-cards/covers', // 👈 ADD THIS
     details: [],
     ...config
   };
@@ -146,7 +147,7 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
             <div className={`relative ${defaultConfig.imageHeight} bg-gradient-to-br from-gray-800 to-gray-900`}>
               {image ? (
                 <img
-                  src={`${API_BASE}/course-cards/covers/${defaultConfig.image}`}
+                  src={`${API_BASE}/${defaultConfig.imagePath}/${image}`}  // 👈 CHANGE THIS
                   alt={title}
                   className="w-full h-full object-cover"
                 />

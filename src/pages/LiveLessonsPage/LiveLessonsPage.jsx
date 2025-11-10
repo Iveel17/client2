@@ -158,7 +158,8 @@ const LiveLessonsPage = () => {
   // Enhanced modal configuration
   const enrollModalConfig = {
     title: 'Live Lesson Details', actionButtonText: 'Add to Cart', actionButtonColor: 'green',
-    showImage: true, showDescription: true, showPrice: true, pricePrefix: '$', imageHeight: 'h-56'
+    showImage: true, showDescription: true, showPrice: true, pricePrefix: '$', imageHeight: 'h-56',
+    imagePath: 'live-lesson-cards/covers'  // 👈 ADD THIS
   };
 
   // Filter modal configuration
