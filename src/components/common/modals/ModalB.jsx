@@ -132,7 +132,7 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
               e.stopPropagation();
               handleClose();
             }}
-            className="absolute top-4 right-4 z-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all shadow-lg text-xl font-bold"
+            className="absolute top-4 right-4 z-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-all shadow-lg text-xl font-bold cursor-pointer"
           >
             ×
           </button>
@@ -245,7 +245,7 @@ const ModalB = ({ isOpen, onClose, itemData, config = {} }) => {
                 defaultConfig.actionButtonColor === 'red' ? 'bg-red-600 hover:bg-red-700' :
                 defaultConfig.actionButtonColor === 'purple' ? 'bg-purple-600 hover:bg-purple-700' :
                 'bg-purple-600 hover:bg-purple-700'
-              } text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 text-sm md:text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02]`}
+              } text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 text-sm md:text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] cursor-pointer`}
             >
               {defaultConfig.actionButtonText}
             </button>
