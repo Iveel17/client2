@@ -154,7 +154,8 @@ const ProductsPage = () => {
     pricePrefix: '$', 
     imageHeight: 'h-48',
     cardHeight: 'min-h-[400px]', 
-    className: 'flex flex-col h-full'
+    className: 'flex flex-col h-full',
+    imagePath: 'product-cards/covers'  // 👈 ADD THIS LINE
   };
 
   // Modal configuration

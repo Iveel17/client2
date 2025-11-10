@@ -151,7 +151,8 @@ const LiveLessonsPage = () => {
   const liveLessonCardConfig = {
     showId: true, showTitle: true, showImage: true, showPrice: true, 
     showStatus: true, pricePrefix: '$', imageHeight: 'h-48',
-    cardHeight: 'min-h-[400px]', className: 'flex flex-col h-full'
+    cardHeight: 'min-h-[400px]', className: 'flex flex-col h-full',
+    imagePath: 'live-lesson-cards/covers'  // 👈 ADD THIS LINE
   };
 
   // Enhanced modal configuration

@@ -1,4 +1,5 @@
 import React from 'react';
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 
 const Card = ({ data, children, onClick, config = {} }) => {
   // Default configuration for different card types
@@ -8,10 +9,11 @@ const Card = ({ data, children, onClick, config = {} }) => {
     showImage: true,
     showPrice: true,
     showStatus: true,
-    idLabel: null, // null means show raw id, or custom label like "Course ID: "
+    idLabel: null,
     pricePrefix: '$',
-    statusConfig: null, // { field1: 'students', field2: 'capacity', icon: '▲', color: 'green' }
+    statusConfig: null,
     imageHeight: 'h-48',
+    imagePath: 'course-cards/covers', // 👈 ADD THIS - default path
     ...config
   };
 
@@ -132,13 +134,13 @@ const Card = ({ data, children, onClick, config = {} }) => {
 
   return (
     <div
-      className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-200 hover:-translate-y-1 cursor-pointer"
+      className="bg-white rounded-lg border-2 border-gray-400 shadow-md overflow-hidden transform transition-transform duration-200 hover:-translate-y-1 cursor-pointer"
       onClick={onClick}
     >
       {defaultConfig.showImage && image && (
         <div className="relative">
           <img
-            src={image}
+            src={`${API_BASE}/${defaultConfig.imagePath}/${data.image}`}  // 👈 CHANGE THIS
             alt={title || "Item Image"}
             className={`w-full object-cover ${defaultConfig.imageHeight}`}
           />

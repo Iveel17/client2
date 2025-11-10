@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 import NotificationToast from '../NotificationToast'; // Adjust path based on your project structure
 import { useCart } from '@/hooks/useCart'; // Adjust path based on your project structure
 
@@ -145,7 +146,7 @@ const ModalA = ({ isOpen, onClose, itemData, config = {} }) => {
             <div className={`relative ${defaultConfig.imageHeight} bg-gradient-to-br from-gray-800 to-gray-900`}>
               {image ? (
                 <img
-                  src={image}
+                  src={`${API_BASE}/course-cards/covers/${defaultConfig.image}`}
                   alt={title}
                   className="w-full h-full object-cover"
                 />
