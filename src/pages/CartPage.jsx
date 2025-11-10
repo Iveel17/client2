@@ -16,6 +16,19 @@ const CartPage = () => {
     clearCart,
   } = useCart();
 
+  const getImagePath = (item) => {
+    if (!item.image) return `https://placehold.co/80x80/E0F2F7/000?text=Item`;
+    
+    const folderMap = {
+      'course': 'course-cards/covers',
+      'product': 'product-cards/covers',
+      'live-lesson': 'live-lesson-cards/covers'
+    };
+    
+    const folder = folderMap[item.type] || 'course-cards/covers';
+    return `http://localhost:5000/${folder}/${item.image}`;
+  };
+
   // Display loading state
   if (loading) {
     return (
@@ -83,7 +96,7 @@ const CartPage = () => {
                 <div className="flex items-center flex-grow mb-4 sm:mb-0">
                   {/* Placeholder Image - replace with actual item image if available */}
                   <img
-                    src={item.image || `https://placehold.co/80x80/E0F2F7/000?text=Item`}
+                    src={getImagePath(item)}
                     alt={item.title || "Cart Item"}
                     className="w-20 h-20 object-cover rounded-lg mr-4 shadow-sm"
                     onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/80x80/E0F2F7/000?text=Item`; }}
