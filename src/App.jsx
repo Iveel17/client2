@@ -18,6 +18,10 @@ import VideoUpload from './components/uploads/VideoUpload';
 import CourseCardUpload from './components/uploads/courseCardUpload';
 import LiveLessonCardUpload from './components/uploads/LiveLessonCardUpload';
 import ProductCardUpload from './components/uploads/ProductCardUpload';
+import CourseContentUpload from './components/uploads/CourseContentUpload';
+import TopicUpload from './components/uploads/TopicUpload';
+import CourseChoosePage from './pages/CourseChoosePage';
+import TopicChoosePage from './pages/TopicChoosePage';
 
 import { 
   ProtectedRoute, 
@@ -39,6 +43,13 @@ function App() {
             <Route path="/course-upload" element={<CourseCardUpload />} />
             <Route path="/live-lesson-upload" element={<LiveLessonCardUpload />} />
             <Route path="/product-upload" element={<ProductCardUpload />} />
+            <Route
+              path="/course-content-upload/:courseId"
+              element={<CourseContentUpload />}
+            />
+            <Route path="/topic-upload/:courseId" element={<TopicUpload />} />
+            <Route path="/course-choose" element={<CourseChoosePage />} />
+            <Route path="/topic-choose/:courseId" element={<TopicChoosePage />} />
 
             {/* Guest-Only Routes - Only for unauthenticated users */}
             <Route path="/login" element={
