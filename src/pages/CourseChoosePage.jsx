@@ -47,7 +47,7 @@ const CourseChoosePage = () => {
             {courses.map((course) => (
             <div
                 key={course._id}
-                onClick={() => navigate(`/course-content-upload/${course._id}`)}
+                onClick={() => navigate(`/topic-choose/${course._id}`)}
                 className="bg-white rounded-xl shadow-sm border p-4 hover:shadow-md transition cursor-pointer"
             >
                 <h2 className="font-semibold text-lg text-gray-800">
