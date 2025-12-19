@@ -27,11 +27,11 @@ const UploadCard = ({ to, title, description, icon }) => {
 };
 
 const uploadOptions = [
-  { 
-    path: '/course-upload', 
-    title: 'Courses',
-    description: 'Upload and manage your educational courses with structured lessons and materials',
-    icon: '📚'
+  {
+    path: '/course-choose',
+    title: 'Course Content',
+    description: 'Upload topics for courses, then subtopics',
+    icon: '📝'
   },
   { 
     path: '/product-upload', 
