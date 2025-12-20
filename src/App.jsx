@@ -13,8 +13,6 @@ import CartPage from './pages/CartPage'
 import SignupPage from './pages/SignupPage'
 import LoginPage from './pages/LoginPage'
 
-import VideoUpload from './components/uploads/VideoUpload';
-
 import CourseCardUpload from './components/uploads/courseCardUpload';
 import LiveLessonCardUpload from './components/uploads/LiveLessonCardUpload';
 import ProductCardUpload from './components/uploads/ProductCardUpload';
