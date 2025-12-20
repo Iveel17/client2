@@ -50,7 +50,7 @@ const TopicChoosePage = () => {
                 key={topic._id}
                 className="bg-white rounded-xl border p-4 shadow-sm hover:shadow-md cursor-pointer"
                 onClick={() =>
-                  navigate(`/lesson-choose/${courseId}/${topic._id}`)
+                  navigate(`/lesson-choose/${topic._id}`)
                 }
               >
                 <h2 className="font-semibold text-lg">

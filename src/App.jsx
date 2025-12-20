@@ -22,6 +22,8 @@ import CourseContentUpload from './components/uploads/CourseContentUpload';
 import TopicUpload from './components/uploads/TopicUpload';
 import CourseChoosePage from './pages/CourseChoosePage';
 import TopicChoosePage from './pages/TopicChoosePage';
+import LessonChoosePage from './pages/LessonChoosePage';
+import LessonUpload from './components/uploads/LessonUpload';
 
 import { 
   ProtectedRoute, 
@@ -48,8 +50,10 @@ function App() {
               element={<CourseContentUpload />}
             />
             <Route path="/topic-upload/:courseId" element={<TopicUpload />} />
+            <Route path="/lesson-upload/:topicId" element={<LessonUpload />} />
             <Route path="/course-choose" element={<CourseChoosePage />} />
             <Route path="/topic-choose/:courseId" element={<TopicChoosePage />} />
+            <Route path="/lesson-choose/:topicId" element={<LessonChoosePage />} />
 
             {/* Guest-Only Routes - Only for unauthenticated users */}
             <Route path="/login" element={
