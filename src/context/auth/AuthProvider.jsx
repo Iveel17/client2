@@ -45,6 +45,11 @@ export const AuthProvider = ({ children }) => {
       if (result.success) {
         setUser(result.user); // Set user state if login successful
       }
+        // 🔥 fetch full profile immediately
+      const profile = await authService.getUserProfile();
+      if (profile.success) {
+        setUser(profile.user);
+      }
       return result; // IMPORTANT: Return the result so LoginPage can check result.success
     } catch (error) {
       console.error('AuthProvider login error:', error);
