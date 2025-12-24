@@ -7,34 +7,43 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initializeUser = async () => {
+    const initAuth = async () => {
       try {
-        const result = await authService.getUserProfile();
-        if (result.success) {
-          setUser(result.user);
-          localStorage.setItem('user', JSON.stringify(result.user)); // Persist user
+        // 1️⃣ VERIFY SESSION
+        const verify = await authService.verify();
+        if (!verify.success) {
+          setUser(null);
+          setLoading(false);
+          return;
+        }
+
+        // 2️⃣ FETCH FULL PROFILE
+        const profile = await authService.getUserProfile();
+        if (profile.success) {
+          setUser(profile.user);
         } else {
           setUser(null);
-          localStorage.removeItem('user');
         }
-      } catch {
+      } catch (error) {
+        console.error('AuthProvider initAuth error:', error);
         setUser(null);
-        localStorage.removeItem('user');
       } finally {
         setLoading(false);
       }
     };
 
-    initializeUser();
+    initAuth();
   }, []);
 
+  const updateUser = (updatedUser) => {
+    setUser(updatedUser); // 🔥 replace entire object
+  };
   const login = async (credentials) => {
     try {
       const result = await authService.login(credentials);
       
       if (result.success) {
         setUser(result.user); // Set user state if login successful
-        localStorage.setItem('user', JSON.stringify(result.user)); // Persist user
       }
       return result; // IMPORTANT: Return the result so LoginPage can check result.success
     } catch (error) {
@@ -62,12 +71,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const result = await authService.logout();
       setUser(null);
-      localStorage.removeItem('user');
       return result;
     } catch (error) {
       console.error('AuthProvider logout error:', error);
       setUser(null); // Still clear user on logout error
-      localStorage.removeItem('user');
       return { success: false, error: 'Logout failed' };
     }
   };
@@ -75,6 +82,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     loading,
+    updateUser,
     login,
     signup,
     logout,
