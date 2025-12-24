@@ -11,9 +11,9 @@ export const useAuth = () => {
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-  
-  const { user, loading, login, signup, logout } = context;
-  
+
+  const { user, loading, login, signup, logout, updateUser } = context;
+
   // Helper functions for common checks
   const isAuthenticated = user && user.role !== 'GUEST';
   const isGuest = !user || user.role === 'GUEST';
@@ -47,6 +47,7 @@ export const useAuth = () => {
     // Core auth state
     user,
     loading,
+    updateUser,
     
     // Auth functions
     login,
