@@ -6,8 +6,7 @@ const AccountModal = forwardRef(({
   isVisible, 
   onClose, 
   user, 
-  profilePic,
-  onProfilePicUpload 
+  onUserUpdate
 }, ref) => {
   const [activeTab, setActiveTab] = useState("account");
 
@@ -62,10 +61,10 @@ const AccountModal = forwardRef(({
           {/* Main Content */}
           <div className="flex-1 p-6 overflow-y-auto">
             {activeTab === "account" && (
-              <ProfileSection 
-                user={user} 
-                profilePic={profilePic}
-                onProfilePicUpload={onProfilePicUpload}
+              <ProfileSection
+                user={user}
+                onUserUpdate={onUserUpdate}
+                onClose={onClose}
               />
             )}
             {activeTab === "security" && <SecuritySection />}

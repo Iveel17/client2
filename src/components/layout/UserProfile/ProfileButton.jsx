@@ -1,14 +1,16 @@
 import React from 'react';
 
-const ProfileButton = ({ user, profilePic, onClick }) => {
+const ProfileButton = ({ user, onClick }) => {
+  const profilePicUrl = user.profilePicture?.url || "";
+
   return (
     <button
       onClick={onClick}
       className="flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-full"
     >
-      {profilePic ? (
+      {profilePicUrl ? (
         <img
-          src={profilePic}
+          src={`${profilePicUrl}?t=${Date.now()}`}
           alt="Profile"
           className="w-10 h-10 rounded-full object-cover border-2 border-blue-200 hover:border-blue-300 transition-colors cursor-pointer"
         />
